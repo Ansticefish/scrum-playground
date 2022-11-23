@@ -1,6 +1,8 @@
 <template lang="pug">
 div#app
   router-view
+  footer
+    p © 2022 The F2E | UI Design - EG | F2E - Anstice
 </template>
 
 <script>
@@ -35,4 +37,12 @@ button {
   }
 }
 
+footer {
+  @include position (fixed, $bottom: 0, $left: 0);
+  @include containerStyle (100vw, 3vh, rgba(10, 13, 20, 0.8));
+  @include flex(center, center);
+  font-family: 'Gen Jyuu Gothic P 700';
+  font-size: 0.875rem;
+  color: $primary-dark;
+}
 </style>
