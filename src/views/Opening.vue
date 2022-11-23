@@ -1,5 +1,6 @@
 <template lang="pug">
 div.opening
+  ProgressBar
   div.bg
     img.bg__top(src="~@/assets/image/opening-bg-top.png", alt="")
     img.bg__bottom(src="~@/assets/image/opening-bg-bottom.png", alt="")
@@ -31,8 +32,12 @@ div.opening
 </template>
 
 <script>
+import ProgressBar from '../components/ProgressBar.vue'
 export default {
   name: 'Opening',
+  components: {
+    ProgressBar,
+  },
   data () {
     return {
       enterVillage: false
@@ -80,6 +85,9 @@ export default {
   .title-wrapper {
     position: relative;
     z-index: 1;
+    .logo {
+      max-height: 95vh;
+    }
     .instruction {
       @include position (absolute, $top: 70%, $right: 50%);
       transform: translate(50%, 0);
@@ -98,7 +106,7 @@ export default {
   .opening-wrapper {
     text-align: center;
     .opening {
-      @include opening (50vw, 40vh,$primary-default);
+      @include opening (50vw, 50vh,$primary-default);
       text-align: start;
     }
     .next-btn {
