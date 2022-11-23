@@ -1,0 +1,186 @@
+// color
+$primary-default: #00FFE0;
+$primary-dark: #008D96;
+$primary-deepDark: #005656;
+$text-default: #FFFFFF;
+$text-dark: #1C3245;
+$text-tint: #00FFE0;
+$role-sm: #D355FF;
+$role-sm-dark: #4C0071;
+$role-sm-tint: #FF00F5;
+$role-team1: #FFC700;
+$role-team2: #FF5C00;
+$role-team-dark: #933500;
+$bg-dark: #0A0D14;
+$bg-dark60: #0A0D1499;
+$bg-transition: #1C324599;
+$danger: #FF0000;
+
+// linear
+$primary-linear: linear-gradient(180deg, rgba(0, 255, 224, 0) 0%, rgba(0, 255, 224, 0.25) 60.42%, rgba(0, 255, 224, 0.45) 79.69%, rgba(0, 255, 224, 0.7) 91.67%, rgba(0, 255, 224, 0.9) 100%);
+$sm-linear: linear-gradient(180deg, rgba(211, 85, 255, 0) 0%, rgba(211, 85, 255, 0.05) 59.9%, rgba(211, 85, 255, 0.2) 78.12%, rgba(211, 85, 255, 0.6) 100%);
+$team1-linear: linear-gradient(180deg, rgba(255, 199, 0, 0) 0%, rgba(255, 199, 0, 0.05) 59.9%, rgba(255, 199, 0, 0.2) 78.12%, rgba(255, 199, 0, 0.6) 100%);
+$team2-linear: linear-gradient(180deg, rgba(255, 122, 0, 0) 0%, rgba(255, 122, 0, 0.05) 59.9%, rgba(255, 122, 0, 0.2) 78.12%, rgba(255, 122, 0, 0.6) 100%);
+$button-linear: linear-gradient(0deg, rgba(0,255, 224, 0)0%,#00ffe0 100%), #008d96;
+$button-disabled-linear: linear-gradient(0deg, rgba(238, 238, 238, 0)0%, #EEEEEE 100%), #555555;
+$pop-up-linear: linear-gradient(180deg, rgba(0, 255, 224, 0) 0%, rgba(0, 255, 224, 0.03) 59.9%, rgba(0, 255, 224, 0.12) 78.12%, rgba(0, 255, 224, 0.36) 100%),rgba(10, 13, 20, 0.6);
+
+// font style
+%h2 {
+  font-size: 2rem; //32px
+  font-family: 'Gen Jyuu Gothic P 700';
+  line-height: 180%;
+}
+
+%h3 {
+  font-size: 1.5rem; //24px 
+  line-height: 180%;
+}
+
+%body {
+  font-size: 1.25rem; //20px
+  line-height: 180%;
+}
+
+%highlight {
+  font-size: 1.25rem; //20px
+  font-family: 'Gen Jyuu Gothic P 700';
+  line-height: 180%;
+}
+
+%talk {
+  @extend %h3;
+  line-height: 180%;
+}
+
+%caption {
+  font-size: 1rem;
+  line-height: 180%;
+}
+
+
+// img
+$pointer-green: url('~@/assets/image/pointer-green.png');
+$pointer-purple: url('~@/assets/image/pointer-purple.png');
+$pointer-yellow: url('~@/assets/image/pointer-yellow.png');
+$pointer-orange: url('~@/assets/image/pointer-orange.png');
+
+// mixin
+@mixin containerStyle ($w, $h, $bg-color, $border: none, $border-radius: 0) {
+  width: #{$w};
+  height: #{$h};
+  background: #{$bg-color};
+  border: #{$border};
+  border-radius: #{$border-radius};
+}
+
+@mixin position ($position, $top: auto, $bottom: auto, $left: auto, $right: auto) {
+  position: #{$position};
+  top: #{$top};
+  bottom: #{$bottom};
+  left: #{$left};
+  right: #{$right};
+}
+
+@mixin flex ($justify, $align, $direction: row) {
+  display: flex;
+  flex-direction: #{$direction};
+  justify-content: #{$justify};
+  align-items: #{$align};
+}
+
+// styles for repeated elements
+@mixin button ($width, $height, $bg-color1, $shadow-color, $color) {
+  @include containerStyle(#{$width}, #{$height}, #{$shadow-color}, none, 40px);
+  position: relative;
+  opacity: 0.8;
+  div {
+    @include containerStyle(#{$width}, #{$height}, #{$bg-color1}, none, 40px);
+    color: #{$color};
+    opacity: 0.8;
+    backdrop-filter: blur(5px);
+    @include position(absolute, $top: -9.09%, $left: 0);
+    @include flex(center, center);
+    @extend %highlight;
+    letter-spacing: .2rem;  
+    transition: all .2s ease-out;
+  }
+  &:hover {
+    div {
+      top: -3%;
+    }
+  }
+  &:disabled {
+     background: #BBBBBB; 
+     div {
+      background: $button-disabled-linear;
+      &:hover {
+        top: -9.09%;
+        cursor: not-allowed;
+      }
+     }
+  }
+}
+
+@mixin opening ($w, $h, $color) {
+  @include containerStyle(#{$w}, #{$h}, $bg-dark60, 2px solid #{$color}, 80px);
+  box-shadow: 0px 0px 24px 8px rgba(0, 255, 224, 0.8), 0px 0px 8px 8px rgba(0, 255, 224, 0.95);
+  backdrop-filter: blur(5px);
+  position: relative;
+  padding: 3% 10%;
+  .name {
+    @include containerStyle(fit-content, fit-content, #{$color});
+    padding: .5px 24px;
+    @extend %h3;
+    color: $bg-dark;
+    @include position (absolute, $top: 40px, $left: -10px); 
+    &::before {
+      content: '';
+      @include containerStyle(9.89px, 52px, $primary-default);
+      @include position (absolute, $top: 0, $left: -1.1%);
+      box-shadow: 0px 0px 24px 2px rgba(0, 255, 224, 0.8), 0px 0px 8px 0px rgba(0, 255, 224, 0.95);
+    }
+  }
+  .content {
+    @extend %h3;
+    color: $text-default;
+    span {
+      color: $text-tint;
+    }
+  }
+}
+
+@mixin popUp ($w, $h, $color, $pointer) {
+  @include containerStyle(#{$w}, #{$h}, $pop-up-linear, 2px solid #{$color}, 80px);
+  box-shadow: 0px 0px 24px 8px rgba(0, 255, 224, 0.8), 0px 0px 8px 8px rgba(0, 255, 224, 0.95);
+  backdrop-filter: blur(5px);
+  position: relative;
+  @include flex (center, space-between);
+  padding: 3%;
+  .name {
+    @include containerStyle(fit-content, fit-content, #{$color});
+    padding: .5px 24px;
+    @extend %h3;
+    color: $bg-dark;
+    @include position (absolute, $top: 40px, $left: -11px);
+    // set up the shadow
+    &::before {
+      content: '';
+      background-image: url('~@/assets/image/popUp-shadow.png');
+      width: 10px;
+      height: 52px;
+      @include position (absolute, $top: 0, $left:0 );
+      box-shadow: 0px 0px 24px 2px rgba(0, 255, 224, 0.8), 0px 0px 8px 0px rgba(0, 255, 224, 0.95);
+      z-index: -1;
+    }
+  }
+  .pointer {
+    @include containerStyle(5%, 5%, #{$pointer});
+    background-repeat: no-repeat;
+    background-size: contain;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
