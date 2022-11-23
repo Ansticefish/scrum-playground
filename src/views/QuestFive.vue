@@ -5,6 +5,9 @@ div Quest-5
 <script>
 export default {
   name: 'QuestFive',
+  beforeCreate() {
+    this.$store.commit('updateProgress', '83.3vw')
+  }
 }
 </script>
 

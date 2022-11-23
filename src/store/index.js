@@ -5,13 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    progress: '0.5vw'
+    progress: ''
   },
   getters: {
   },
   mutations: {
-    updateProgress(newProgress) {
-      this.state.progress = newProgress
+    updateProgress(state, newProgress) {
+      state.progress = newProgress
     }
   },
   actions: {

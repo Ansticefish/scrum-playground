@@ -5,6 +5,9 @@ div Ending
 <script>
 export default {
   name: 'Ending',
+  beforeCreate() {
+    this.$store.commit('updateProgress', '100vw')
+  }
 }
 </script>
 

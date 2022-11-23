@@ -1,6 +1,5 @@
 <template lang="pug">
 div.opening
-  ProgressBar
   div.bg
     img.bg__top(src="~@/assets/image/opening-bg-top.png", alt="")
     img.bg__bottom(src="~@/assets/image/opening-bg-bottom.png", alt="")
@@ -27,21 +26,20 @@ div.opening
         br 
         br
         | 請接受挑戰任務 ， 成功通過 Scrum 新手村的挑戰任務吧～
-    button.next-btn 
+    button.next-btn(@click="()=> this.$router.push('/quest1')")
       div 接受挑戰
 </template>
 
 <script>
-import ProgressBar from '../components/ProgressBar.vue'
 export default {
   name: 'Opening',
-  components: {
-    ProgressBar,
-  },
   data () {
     return {
       enterVillage: false
     }
+  },
+  beforeCreate () {
+    this.$store.commit('updateProgress', '0.5vw')
   }
 }
 </script>

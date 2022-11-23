@@ -1,13 +1,18 @@
 <template lang="pug">
 div#app
+  ProgressBar
   router-view
   footer
     p © 2022 The F2E | UI Design - EG | F2E - Anstice
 </template>
 
 <script>
+import ProgressBar from './components/ProgressBar.vue'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    ProgressBar,
+  }
 }
 </script>
 
