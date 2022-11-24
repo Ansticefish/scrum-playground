@@ -29,6 +29,7 @@ export default {
   src: url('~@/assets/fonts/GenJyuuGothic-P-Medium.ttf')
 }
 
+
 html, body {
   font-family: 'Gen Jyuu Gothic P 500';
   font-size: 100%; 
@@ -49,5 +50,12 @@ footer {
   font-family: 'Gen Jyuu Gothic P 700';
   font-size: 0.875rem;
   color: $primary-dark;
+}
+
+// decrease font size when the screen is smaller
+@media screen and (max-width: 1440px) {
+   html, body {
+    font-size: 12px;
+   } 
 }
 </style>
