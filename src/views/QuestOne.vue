@@ -5,6 +5,7 @@ div.quest1
       img.hole(src="~@/assets/image/role-hole.png", alt="")
       img.light(src="~@/assets/image/role_g_light.png", alt="")
       img.character(src="~@/assets/image/role_g.png", alt="")
+    //- dialogues 
     Dialogue(:speaker="'PO'" :showPointer="false" v-if="step === 1" )
       span \ 碰 / 
       | 我是短衝小精靈 ， 開發 A 組的 PO 。
@@ -32,18 +33,23 @@ div.quest1
       button 點擊畫面任意處繼續
     button.btn-start(v-if="step === 2" @click="()=> this.step = 3") 準備好了
       div 準備好了
+    //- todo list
+    TodoList
 </template>
 
 <script>
 import Dialogue from '../components/Dialogue.vue'
+import TodoList from '../components/TodoList.vue'
+
 export default {
   name: 'QuestOne',
   components: {
-    Dialogue
+    Dialogue,
+    TodoList,
   },
   data () {
     return {
-      step: 1
+      step: 3
     }
   },
   methods: {
@@ -67,7 +73,8 @@ export default {
     height: 30%;
     .character-wrapper {
       @extend %character;
-      height: 100%;
+      height: 130%;
+      margin-top: 5%;
     }
   }
   .body {

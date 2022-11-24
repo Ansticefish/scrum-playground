@@ -58,6 +58,12 @@ $pop-up-linear: linear-gradient(180deg, rgba(0, 255, 224, 0) 0%, rgba(0, 255, 22
   line-height: 180%;
 }
 
+%listCaption {
+  font-size: 1rem;
+  font-family: 'Gen Jyuu Gothic P 700';
+  line-height: 180%;
+}
+
 
 // img
 $pointer-green: url('~@/assets/image/pointer-green.png');
@@ -224,7 +230,7 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
 
 
 %character {
-  width: 15vw;
+  width: 22vw;
   // set up height so that the characters will also shrink with height
   height: 100%;
   text-align: center;
@@ -241,8 +247,80 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
   .character {
     height: 100%;
     position: relative;
-    top: -158%;
+    top: -151%;
     object-fit: contain;
   }
 }
 
+
+@mixin listStyle ($bg4, $bg3, $bg2, $container, $head, $p, $border){
+  width: 30%;
+  height: 95%;
+  position: relative;
+  margin: 0 auto;
+  // glass effect
+  .bg4,
+  .bg3,
+  .bg2,
+  .container {
+    @include containerStyle(100%, 100%, $primary-default, none, 20px);
+    backdrop-filter: blur(5px);
+  }
+  .bg4 {
+    background: #{$bg4};
+    opacity: 0.9;
+    @include position (absolute, $top: 24px, $left: 24px);
+  }
+  .bg3 {
+    background: #{$bg3};
+    @include position (absolute, $top: 24px, $left: 24px);
+  }
+    
+  .bg2 {
+    background: #{$bg2};
+    @include position (absolute, $top: 12px, $left: 12px);
+  }
+  
+  // set the style of the content
+  .container { 
+    background: #{$container}; 
+    .head {
+      @include containerStyle(100%, 16%, #{$head}, none, 20px 20px 0 0);
+      @include flex (center, center, column);
+      h2 {
+        @extend %h2;
+        color: $bg-dark;
+      }
+      p {
+        @extend %listCaption;
+        color: #{$p};
+        margin-top: -8px;
+      }
+    }
+    .list {
+      padding: 2%;
+      width: 100%;
+      height: 80%;
+      position: relative;
+      &__indicator {
+        @include position (absolute, $top: 5%, $left: 2.5%);
+        p {
+          @extend %listCaption;
+          color: $text-default;
+        }
+        img {
+          height: 85%;
+        }
+      }
+      &__blocks {
+        width: 100%;
+        height: 100%;
+        margin-left: 6%;
+        .block {
+          @include containerStyle(90%, calc(98%/4), transparent, 2px dashed #{$border}, 20px);
+          margin-bottom: 2%;
+        }
+      }
+    }
+  }
+}
