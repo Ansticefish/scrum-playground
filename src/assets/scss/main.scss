@@ -123,6 +123,23 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
   }
 }
 
+%button-next {
+  @include position (fixed, $top: 0, $bottom: 0, $left: 0, $right: 0);
+  z-index: 100;
+  @include flex(center, center);
+  cursor: pointer;
+  button {
+    @include containerStyle(fit-content, fit-content, transparent, 2px solid $primary-default, 20px);
+    padding: 2px 30px;
+    @extend %highlight;
+    color: $primary-default;
+    transition: opacity .3s ease-in;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+}
+
 @mixin opening ($w, $h, $color) {
   @include containerStyle(fit-content, fit-content, $bg-dark60, 2px solid #{$color}, 80px);
   min-width: #{$w};
@@ -154,12 +171,13 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
 }
 
 @mixin popUp ($w, $h, $color, $pointer) {
-  @include containerStyle(#{$w}, #{$h}, $pop-up-linear, 2px solid #{$color}, 80px);
+  @include containerStyle(#{$w}, #{$h}, $pop-up-linear, 2px solid #{$color}, 40px);
   box-shadow: 0px 0px 24px 8px rgba(0, 255, 224, 0.8), 0px 0px 8px 8px rgba(0, 255, 224, 0.95);
   backdrop-filter: blur(5px);
   position: relative;
-  @include flex (center, space-between);
-  padding: 3%;
+  @include flex (flex-start, center);
+  padding: 2% 6%;
+  padding-left: 8%;
   .name {
     @include containerStyle(fit-content, fit-content, #{$color});
     padding: .5px 24px;
@@ -177,8 +195,25 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
       z-index: -1;
     }
   }
+  .content {
+    width: 100%;
+    height: fit-content;
+    @extend %body;
+    color: $text-default;
+    span {
+      color: $text-tint;
+    }
+    img {
+      height: 180%;
+      @include position (relative, $top: 10px);
+    }
+    strong {
+      @extend %h2;
+    }
+  }
   .pointer {
-    @include containerStyle(5%, 5%, #{$pointer});
+    @include position(absolute, $bottom: 13%, $right: 3%);
+    @include containerStyle(5%, 15%, #{$pointer});
     background-repeat: no-repeat;
     background-size: contain;
     &:hover {
@@ -189,22 +224,25 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
 
 
 %character {
-  width: 22vw;
+  width: 15vw;
   // set up height so that the characters will also shrink with height
   height: 100%;
   text-align: center;
   .hole {
     height: 25%;
+    object-fit: contain;
   }
   .light {   
     height: 130%;
     position: relative;
     top: -25%;
+    object-fit: contain;
   }
   .character {
     height: 100%;
     position: relative;
     top: -158%;
+    object-fit: contain;
   }
 }
 
