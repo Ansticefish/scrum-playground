@@ -34,7 +34,7 @@ div.quest1
     button.btn-start(v-if="step === 2" @click="()=> this.step = 3") 準備好了
       div 準備好了
     //- todo list
-    TodoList
+    TodoList(v-if="step === 3")
 </template>
 
 <script>
@@ -49,7 +49,7 @@ export default {
   },
   data () {
     return {
-      step: 3
+      step: 1
     }
   },
   methods: {
