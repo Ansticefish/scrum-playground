@@ -187,3 +187,24 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
   }
 }
 
+
+%character {
+  width: 22vw;
+  // set up height so that the characters will also shrink with height
+  height: 100%;
+  text-align: center;
+  .hole {
+    height: 25%;
+  }
+  .light {   
+    height: 130%;
+    position: relative;
+    top: -25%;
+  }
+  .character {
+    height: 100%;
+    position: relative;
+    top: -158%;
+  }
+}
+

@@ -5,6 +5,7 @@ div.quest1
       img.hole(src="~@/assets/image/role-hole.png", alt="")
       img.light(src="~@/assets/image/role_g_light.png", alt="")
       img.character(src="~@/assets/image/role_g.png", alt="")
+    div.
 </template>
 
 <script>
@@ -19,5 +20,15 @@ export default {
 <style lang="scss" scoped>
 .quest1 {
   @include containerStyle(100vw, 100vh, url('~@/assets/image/bg.png'));
+  padding: 1% 0;
+  .head {
+    @include flex (space-between, center);
+    height: 30vh;
+    .character-wrapper {
+      @extend %character;
+      height: 100%;
+    }
+  }
+  
 }
 </style>
