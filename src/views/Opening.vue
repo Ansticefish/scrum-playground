@@ -14,7 +14,7 @@ div.opening
     img.logo(src="~@/assets/image/opening-logo.png", alt="")
     div.instruction
       h2 深入敏捷の村一探究竟
-      button.enter-btn(@click="()=> this.enterVillage = true") 
+      button.enter-btn(@click="()=> this.enterVillage = true") 進入村莊
         div 進入村莊
   div.opening-wrapper(v-else)
     div.opening
@@ -26,7 +26,7 @@ div.opening
         br 
         br
         | 請接受挑戰任務 ， 成功通過 Scrum 新手村的挑戰任務吧～
-    button.next-btn(@click="()=> this.$router.push('/quest1')")
+    button.next-btn(@click="()=> this.$router.push('/quest1')") 接受挑戰
       div 接受挑戰
 </template>
 

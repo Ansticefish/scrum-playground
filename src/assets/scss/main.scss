@@ -90,19 +90,20 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
 }
 
 // styles for repeated elements
+
 @mixin button ($width, $height, $bg-color1, $shadow-color, $color) {
   @include containerStyle(#{$width}, #{$height}, #{$shadow-color}, none, 40px);
   position: relative;
   opacity: 0.8;
+  @extend %highlight;
+  color: #{$color};
+  letter-spacing: .2rem;
   div {
     @include containerStyle(#{$width}, #{$height}, #{$bg-color1}, none, 40px);
-    color: #{$color};
     opacity: 0.8;
     backdrop-filter: blur(5px);
     @include position(absolute, $top: -9.09%, $left: 0);
     @include flex(center, center);
-    @extend %highlight;
-    letter-spacing: .2rem;  
     transition: all .2s ease-out;
   }
   &:hover {
