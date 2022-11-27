@@ -3,7 +3,7 @@ div.quest3
   div.head 
     Dialogue.dialogue-top(v-if="step < 4" :speaker="'GG'" :showPointer="showRedPointer" :orange="true" @change-step="addStep")
       | 沒錯，如 EE 說的，我這邊已經把剛剛討論好的點數標上去囉～ 你來練習把任務排到短衝待辦清單吧 ！
-    Dialogue.dialogue-top2(v-if="step > 3" :speaker="'GG'" :showPointer="showRedPointer" :orange="true" @change-step="addStep")
+    Dialogue.dialogue-top2(v-if="step > 3" :speaker="'GG'" :showPointer="false" :orange="true")
       strong 換你來試試看吧 ！ 
       br
       | 把 
@@ -28,6 +28,18 @@ div.quest3
       | 這套軟體 ， 
       br
       | 你有時間記得先去註冊和熟悉唷 !
+    //-lists 
+    div.list-wrapper(v-if="step > 3")
+      TodoList.todo(
+        :showSideBar="false" 
+        :is-quest3="true" 
+        :deletedId="deletedId"
+        :restoredId="restoredId"
+        )
+      SprintList.sprint(
+        @delete-data="deleteData"
+        @restore-data="restoreData"
+        )
     button.btn-start(v-if="step === 3" @click="addStep") 練習去囉
       div 練習去囉
     button.btn-next(v-if="step > 3" @click="addStep" :disabled="!questionSolved" ) 開始sprint
@@ -36,18 +48,24 @@ div.quest3
 
 <script>
 import Dialogue from '../components/Dialogue.vue';
+import TodoList from '../components/TodoList.vue';
+import SprintList from '../components/SprintList.vue';
 
 export default {
   name: 'QuestThree',
   components: {
     Dialogue,
+    TodoList,
+    SprintList,
   },
   data () {
     return {
-      step: 1,
+      step: 4,
       showRedPointer: true,
       showYellowPointer: true,
-      questionSolved: false
+      questionSolved: false,
+      deletedId: '',
+      restoredId: ''
     }
   },
   methods: {
@@ -58,6 +76,13 @@ export default {
         this.showYellowPointer = false
       }
       this.step += 1
+    },
+    deleteData(id) {
+      this.deletedId = id
+      console.log('get delete')
+    },
+    restoreData(id){
+      this.restoredId = id
     }
   },
   beforeCreate() {
@@ -97,6 +122,14 @@ export default {
     .dialogue-mid {
       width: 50%;
       margin: 10% auto;
+    }
+    .list-wrapper {
+      height: 100%;
+      width: 70%;
+      @include flex(flex-start, center);
+      .todo, .sprint {
+        width: 45%;
+      }
     }
     .btn-start, .btn-next {
       @include button (10vw, 60px, $button-linear, $primary-default, $text-default);

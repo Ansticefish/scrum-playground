@@ -257,11 +257,10 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
 }
 
 
-@mixin listStyle ($bg4, $bg3, $bg2, $container, $head, $p, $border){
+@mixin listStyle ($bg4, $bg3, $bg2, $container, $head, $p, $border, $point){
   width: 30%;
   height: 95%;
   position: relative;
-  margin: 0 auto;
   // glass effect
   .bg4,
   .bg3,
@@ -320,9 +319,26 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
         width: 100%;
         height: 100%;
         margin-left: 6%;
+        @extend %body;
+        color: $text-default;
         .block {
           @include containerStyle(90%, calc(98%/4), transparent, 2px dashed #{$border}, 20px);
           margin-bottom: 2%;
+        }
+        .block-quest3 {
+          @include containerStyle(90%, calc(98%/4), $bg-dark60, 4px solid #{$border}, 20px);
+          margin-bottom: 2%;
+          @include flex (flex-start, center);
+          padding: 1% 2%;
+          cursor: grab;
+          .point {
+            @include containerStyle(auto, 80%, #{$point}, none, 50%);
+            aspect-ratio: 1;
+            margin-right: 2%;
+            @extend %h2;
+            color: $text-default;
+            @include flex(center,center);
+          }
         }
       }
     }
