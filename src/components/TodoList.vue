@@ -90,14 +90,12 @@ export default {
   },
   watch: {
     'deletedId': function () {
-        console.log('delete', this.deletedId)
         const deletedItem = this.todoList.find(item => item.id === this.deletedId)
         this.deletedItems.push(deletedItem)
         this.todoList = this.todoList.filter(item => item.id !== this.deletedId)
     },
     'restoredId': function () {
       const restoredItem = this.deletedItems.find(item=> item.id === this.restoredId)
-      console.log(restoredItem)
       this.deletedItems = this.deletedItems.filter(item=> item.id !== this.restoredId)
       this.todoList.push({
         ...restoredItem,

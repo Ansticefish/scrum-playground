@@ -79,7 +79,6 @@ export default {
     },
     deleteData(id) {
       this.deletedId = id
-      console.log('get delete')
     },
     restoreData(id){
       this.restoredId = id

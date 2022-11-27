@@ -63,63 +63,38 @@ export default {
     addData($event, item) {
       const newItem = JSON.parse($event.dataTransfer.getData('application/json'))
       const { id, point, content, originalId} = newItem
-      // if there is content already
       if(!item.content.length && originalId === undefined) {
-        // dragged from todoList
-        this.$set(this.sprintList, item.id -1, {
-          ...item,
-          point,
-          content,
-          originalId: id
-        } )
+        //  if there is not any content already & dragged from todoList
+        this.resetSprint(item.id -1, item, point, content, id)
         this.$emit('delete-data', newItem.id)
       } else if (!item.content.length) {
-        console.log('two')
-        this.$set(this.sprintList, id - 1, {
-          ...newItem,
-          point: '',
-          content: '',
-          originalId: ''
-        })
-        this.$set(this.sprintList, item.id - 1, {
-          ...item,
-          point,
-          content,
-          originalId,
-        })
+        // if there is not any content already & dragged within sprintList
+        this.resetSprint(id -1, newItem, '', '', '')
+        this.resetSprint(item.id -1, item, point, content, originalId)
       } else if (item.content.length && originalId === undefined) {
-        this.$set(this.sprintList, id - 1, {
-          ...newItem,
-          point: '',
-          content: '',
-          originalId: ''
-        })
+        // if there is content already & dragged from todoList
+        this.resetSprint(id -1, newItem, '', '', '')
         const restoredItemId = item.originalId
         this.$emit('restore-data', restoredItemId)
-        // delete item from todo
         this.$emit('delete-data', newItem.id)
-        this.$set(this.sprintList, item.id - 1, {
-          ...item,
-          point,
-          content,
-          originalId: id
-        })
+        this.resetSprint(item.id -1, item, point, content, id )
       } else {
-        this.$set(this.sprintList, id - 1, {
-          ...newItem,
-          point: '',
-          content: '',
-          originalId: ''
-        })
+        // if there is content already & dragged within sprintList
+        // to deal with drag and drop at the same block
+        if(item.originalId === originalId) return
+        this.resetSprint(id -1, newItem, '', '', '')
         const restoredItemId = item.originalId
         this.$emit('restore-data', restoredItemId)
-        this.$set(this.sprintList, item.id - 1, {
-          ...item,
-          point,
-          content,
-          originalId,
-        })
+        this.resetSprint(item.id -1, item, point, content, originalId)
       }
+    },
+    resetSprint (index, item, point, content, originalId) {
+      this.$set(this.sprintList, index, {
+        ...item,
+        point,
+        content,
+        originalId,
+      })
     }
   }
 }
