@@ -34,7 +34,45 @@ div.quest1
     button.btn-start(v-if="step === 2" @click="()=> this.step = 3") 準備好了
       div 準備好了
     //- todo list
-    TodoList(v-if="step === 3")
+    div.drag-area(v-if="step > 2")
+      div.drag-area__left
+        div.item.top(
+          :class="[{'fade': step === 3}, {'dragged': list[0].isDragged}]"
+          draggable="true"
+          @dragstart="startDrag($event, 0)"
+          @dragend="endDrag(0)"
+        ) 
+          | 應徵者的線上履歷編輯器
+        div.item.bottom(
+          :class="[{'fade': step === 3},{'dragged': list[1].isDragged}]"
+          draggable="true"
+          @dragstart="startDrag($event, 1)"
+          @dragend="endDrag(1)"
+          )
+          | 後台職缺管理功能（資訊上架、
+          br
+          | 下架、顯示應徵者資料）
+      TodoList
+      div.drag-area__right
+        div.item.top(
+          :class="[{'fade': step === 3},{'dragged': list[2].isDragged}]"
+          draggable="true"
+          @dragstart="startDrag($event, 2)"
+          @dragend="endDrag(2)"
+          ) 
+          | 會員系統（登入、註冊、權限管理）
+        div.item.bottom(
+          :class="[{'fade': step === 3},{'dragged': list[3].isDragged}]"
+          draggable="true"
+          @dragstart="startDrag($event, 3)"
+          @dragend="endDrag(3)"
+          ) 
+          | 前台職缺列表、應徵
+        svg( id="path" width="148" height="176" viewBox="0 0 148 176" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="step === 3")
+          path(d="M4.19366 0.0094212C3.09428 -0.0975291 2.11635 0.706986 2.00939 1.80637L0.26642 19.7218C0.159463 20.8212 0.963979 21.7991 2.06336 21.906C3.16274 22.013 4.14067 21.2085 4.24762 20.1091L5.79693 4.1843L21.7217 5.73361C22.8211 5.84056 23.7991 5.03604 23.906 3.93667C24.013 2.83728 23.2084 1.85936 22.1091 1.7524L4.19366 0.0094212ZM147.044 172.729L5.5445 0.7294L2.45549 3.27065L143.955 175.27L147.044 172.729Z" fill="white")
+        div.demo-block(v-if="step === 3") 前台職缺列表、應徵
+          img(src="~@/assets/image/quest1-hand.png")
+</svg>
 </template>
 
 <script>
@@ -49,12 +87,46 @@ export default {
   },
   data () {
     return {
-      step: 1
+      step: 4,
+      list: [
+        {
+          id: 1,
+          content: '應徵者的線上履歷編輯器',
+          isDragged: false,
+          isDropped: false,
+        },
+        {
+          id: 2,
+          content: '後台職缺管理功能（資訊上架、下架、顯示應徵者資料）',
+          isDragged: false,
+          isDropped: false,
+        },
+        {
+          id: 3,
+          content: '會員系統（登入、註冊、權限管理）',
+          isDragged: false,
+          isDropped: false,
+        },
+        {
+          id: 4,
+          content: '前台職缺列表、應徵',
+          isDragged: false,
+          isDropped: false,
+        }
+      ]
     }
   },
   methods: {
     addStep () {
       this.step += 1
+    },
+    startDrag($event, index) {
+      $event.dataTransfer.clearData()
+      $event.dataTransfer.setData('application/json', JSON.stringify(this.list[index]))
+      this.list[index].isDragged = true
+    },
+    endDrag(index) {
+      this.list[index].isDragged = false
     }
   },  
   beforeCreate() {
@@ -87,7 +159,70 @@ export default {
       @include button (10vw, 60px, $button-linear, $primary-default, $text-default);
       @include position (absolute, $bottom: 2%, $right: 2%);
     }
+    .drag-area {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      &__left, &__right {
+        height: 100%;
+        width: calc(100%/3);
+        @include flex (center, center, column);
+        padding: 3%;
+        position: relative;
+        .item {
+          @include containerStyle(fit-content, fit-content, transparent, 4px solid $primary-default, 20px);
+          padding: 2% 3%;
+          @extend %body;
+          color: $text-default; 
+          transition: all .5s ease-out;
+          cursor: grab;
+          &.fade {
+            opacity: 0.4;
+          }
+          &.dragged {
+            opacity: 0.2;
+          }
+        }
+        .top {
+          align-self: flex-end;
+          margin-bottom: 15%;
+        }
+        .bottom {
+          align-self: flex-start;
+        }
+        #path {
+          @include position (absolute, $top: 28%, $left: -10%);
+        }
+        .demo-block {
+          @include containerStyle(78%, calc(72%/4), $bg-dark60, 4px solid $primary-default , 20px);
+          @include position (absolute, $top: 17%, $left: -88%);
+          @include flex (flex-start, center);
+          padding: 3%;
+          @extend %body;
+          color: $text-default;
+          animation: dragDemo 1s ease-in;
+          img {
+            @include position (absolute, $bottom: -15%, $right: 20%);
+          }
+        }
+      }
+    }
   }
-  
+}
+
+// animation keyword: offset-path
+// change later
+@keyframes dragDemo {
+  0% {
+    width: fit-content;
+    height: fit-content;
+    padding: 2% 3%;
+    @include position (absolute, $top: 56%, $left: 9%); 
+  }
+  50% {
+    width: fit-content;
+    height: fit-content;
+    padding: 2% 3%;
+  }
 }
 </style>
