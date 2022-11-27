@@ -79,7 +79,7 @@ export default {
           ...newItem,
           point: '',
           content: '',
-          originalId: 0
+          originalId: ''
         })
         this.$set(this.sprintList, item.id - 1, {
           ...item,
@@ -87,12 +87,29 @@ export default {
           content,
           originalId,
         })
+      } else if (item.content.length && originalId === undefined) {
+        this.$set(this.sprintList, id - 1, {
+          ...newItem,
+          point: '',
+          content: '',
+          originalId: ''
+        })
+        const restoredItemId = item.originalId
+        this.$emit('restore-data', restoredItemId)
+        // delete item from todo
+        this.$emit('delete-data', newItem.id)
+        this.$set(this.sprintList, item.id - 1, {
+          ...item,
+          point,
+          content,
+          originalId: id
+        })
       } else {
         this.$set(this.sprintList, id - 1, {
           ...newItem,
           point: '',
           content: '',
-          originalId: 0
+          originalId: ''
         })
         const restoredItemId = item.originalId
         this.$emit('restore-data', restoredItemId)
