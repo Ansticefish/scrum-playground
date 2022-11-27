@@ -351,6 +351,7 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
         .progress {
           @include containerStyle(90%, 100%, $role-team1, none, 20px);
           max-width: 100%;
+          transition: width .2s ease-out;
           &.red {
             background: $danger;
           }

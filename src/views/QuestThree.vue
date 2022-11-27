@@ -35,11 +35,13 @@ div.quest3
         :is-quest3="true" 
         :deletedId="deletedId"
         :restoredId="restoredId"
+        @delete-sprint="deleteSprint"
         )
       SprintList.sprint(
         @delete-data="deleteData"
         @restore-data="restoreData"
         @update-points="updatePoints"
+        :deletedSprint="deletedSprint"
         )
     button.btn-start(v-if="step === 3" @click="addStep") 練習去囉
       div 練習去囉
@@ -67,6 +69,7 @@ export default {
       questionSolved: false,
       deletedId: '',
       restoredId: '',
+      deletedSprint: 0
     }
   },
   methods: {
@@ -90,6 +93,10 @@ export default {
       } else {
         this.questionSolved = true
       }
+    },
+    deleteSprint (id) {
+      this.deletedSprint = id
+      console.log('delete sprint')
     }
   },
   beforeCreate() {

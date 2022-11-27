@@ -20,7 +20,7 @@ div.sprint
           @dragstart="startDrag($event, item)"
           @dragend="endDrag(item)"
           )
-          div.point {{ item.point }}
+          div.point {{ item.point === 0? '': item.point }}
           p {{ item.content}}
         div.list-bar
           div.progress(:style="{'width': totalPoints/20*100 + '%'}" :class="{'red': totalPoints > 20}")
@@ -31,26 +31,31 @@ div.sprint
 import { drag } from '../utils/mixins'
 export default {
   name: 'SprintList',
+  props: {
+    deletedSprint: {
+      type: Number
+    }
+  },
   data () {
     return {
       sprintList: [
         {
           id: 1,
-          point: '',
+          point: 0,
           content: '',
           isDragged: false,
           originalId: ''
         },
         {
           id: 2,
-          point: '',
+          point: 0,
           content: '',
           isDragged: false,
           originalId: ''
         },
         {
           id: 3,
-          point: '',
+          point: 0,
           content: '',
           isDragged: false,
           originalId: ''         
@@ -73,7 +78,7 @@ export default {
         this.$emit('delete-data', newItem.id)
       } else if (!item.content.length) {
         // if there is not any content already & dragged within sprintList
-        this.resetSprint(id -1, newItem, '', '', '')
+        this.resetSprint(id -1, newItem, 0, '', '')
         this.resetSprint(item.id -1, item, point, content, originalId)
       } else if (item.content.length && originalId === undefined) {
         // if there is content already & dragged from todoList
@@ -85,7 +90,7 @@ export default {
         // if there is content already & dragged within sprintList
         // to deal with drag and drop at the same block
         if(item.originalId === originalId) return
-        this.resetSprint(id -1, newItem, '', '', '')
+        this.resetSprint(id -1, newItem, 0, '', '')
         const restoredItemId = item.originalId
         this.$emit('restore-data', restoredItemId)
         this.resetSprint(item.id -1, item, point, content, originalId)
@@ -106,6 +111,20 @@ export default {
         this.totalPoints += this.sprintList[i].point
       }
       this.$emit('update-points', this.totalPoints)
+    }
+  },
+  watch: {
+    'deletedSprint': function () {
+      console.log('sprint update')
+      const index = this.sprintList.findIndex(item=> item.originalId === this.deletedSprint)
+      this.$set(this.sprintList, index, {
+        id: index + 1,
+        point: 0,
+        content: '',
+        isDragged: false,
+        originalId: '' 
+      })
+      this.updateTotalPoints()
     }
   }
 }

@@ -12,19 +12,22 @@ div.todo
         p 高
         img(src="~@/assets/image/todo-arrow.png")
         p 低
-      div.list__blocks
-        div.block(v-if="!isQuest3" v-for="n in 2") 
+      div.list__blocks(v-if="!isQuest3")
+        div.block(v-for="n in 2")
           p
+      //- layout for quest 3
+      div.list__blocks( 
+        v-if="isQuest3"
+        @dragenter="allowDrag($event)"
+        @dragover="allowDrag($event)"
+        @drop="addData($event)")
         div.block-quest3(
-          v-if="isQuest3" 
           v-for="item in todoList" 
           :key="item.id"
           draggable="true"
           :class="{'dragged': item.isDragged}"
           @dragstart="startDrag($event, item)"
           @dragend="endDrag(item)"
-          @dragenter="allowDrag($event)"
-          @dragover="allowDrag($event)"
           )
           div.point {{ item.point}}
           p {{ item.content}}
@@ -61,31 +64,44 @@ export default {
           point: 8,
           content: '後台職缺管理功能（資訊上架、下架、顯示應徵者資料)',
           isDragged: false,
-          list: 'todo'
         },
         {
           id: '2',
           point: 5,
           content: '應徵者的線上履歷編輯器',
           isDragged: false,
-          list: 'todo'
         },
         {
           id: '3',
           point: 13,
           content: '會員系統（登入、註冊、權限管理）',
           isDragged: false,
-          list: 'todo'
         },
         {
           id: '4',
           point: 8,
           content: '前台職缺列表、應徵',
           isDragged: false,
-          list: 'todo'
         },
       ],
       deletedItems: []
+    }
+  },
+  methods: {
+    addData ($event) {
+      const {originalId} = JSON.parse($event.dataTransfer.getData('application/json'))
+      // prevent drag and drop inside todoList
+      if(originalId === undefined) return
+      const { content, point} = this.deletedItems.find(item => item.id === originalId)
+      this.$set(this.todoList, this.todoList.length, {
+        id: uuidv4(),
+        point,
+        content,
+        isDragged: false
+      })
+      this.deletedItems = this.deletedItems.filter(item => item.id !== originalId)
+      // use originalId instead of id to delete item so that watch can always be triggered
+      this.$emit('delete-sprint', originalId)
     }
   },
   watch: {
