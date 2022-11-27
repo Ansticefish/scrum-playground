@@ -22,6 +22,9 @@ div.sprint
           )
           div.point {{ item.point }}
           p {{ item.content}}
+        div.list-bar
+          div.progress(:style="{'width': totalPoints/20*100 + '%'}" :class="{'red': totalPoints > 20}")
+          p {{ totalPoints}} / 20 (5人)
 </template>
 
 <script>
@@ -53,6 +56,7 @@ export default {
           originalId: ''         
         },
       ],
+      totalPoints: 0
     }
   },
   mixins: [drag],

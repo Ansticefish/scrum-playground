@@ -341,6 +341,25 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
           }
         }
       }
+      .list-bar {
+        @include containerStyle(90%, 6%, $role-team-dark, none, 20px);
+        margin-top: 20%;
+        padding: 2px 3px;
+        .progress {
+          @include containerStyle(90%, 100%, $role-team1, none, 20px);
+          max-width: 100%;
+          &.red {
+            background: $danger;
+          }
+        }
+        p {
+          @extend %listCaption;
+          width: fit-content;
+          height: 100%;
+          @include position(relative, $top: -100%, $left: 50%);
+          transform: translateX(-50%);
+        }
+      }
     }
   }
 }
