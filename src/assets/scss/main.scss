@@ -150,6 +150,11 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
   }
 }
 
+%button-leave {
+  @extend %button-next;
+  background: linear-gradient(180deg, rgba(0, 255, 224, 0) 0%, rgba(0, 255, 224, 0.25) 60.42%, rgba(0, 255, 224, 0.45) 79.69%, rgba(0, 255, 224, 0.7) 91.67%, rgba(0, 255, 224, 0.9) 100%);
+}
+
 @mixin opening ($w, $h, $color) {
   @include containerStyle(fit-content, fit-content, $bg-dark60, 2px solid #{$color}, 80px);
   min-width: #{$w};
