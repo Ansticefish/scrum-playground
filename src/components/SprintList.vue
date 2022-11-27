@@ -12,7 +12,7 @@ div.sprint
         div.block(
           v-for="item in sprintList" 
           :key="item.id"
-          :class="{'block-quest3': item.content}"
+          :class="[{'block-quest3': item.content}, {'red': item.content && totalPoints > 20}]"
           @dragenter="allowDrag($event)"
           @dragover="allowDrag($event)"
           @drop="addData($event, item)"
@@ -77,7 +77,6 @@ export default {
         this.resetSprint(item.id -1, item, point, content, originalId)
       } else if (item.content.length && originalId === undefined) {
         // if there is content already & dragged from todoList
-        this.resetSprint(id -1, newItem, '', '', '')
         const restoredItemId = item.originalId
         this.$emit('restore-data', restoredItemId)
         this.$emit('delete-data', newItem.id)
@@ -91,6 +90,7 @@ export default {
         this.$emit('restore-data', restoredItemId)
         this.resetSprint(item.id -1, item, point, content, originalId)
       }
+      this.updateTotalPoints()
     },
     resetSprint (index, item, point, content, originalId) {
       this.$set(this.sprintList, index, {
@@ -99,6 +99,13 @@ export default {
         content,
         originalId,
       })
+    },
+    updateTotalPoints () {
+      this.totalPoints = 0
+      for (let i = 0; i < this.sprintList.length; i++) {
+        this.totalPoints += this.sprintList[i].point
+      }
+      this.$emit('update-points', this.totalPoints)
     }
   }
 }

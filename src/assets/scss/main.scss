@@ -339,11 +339,14 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
             color: $text-default;
             @include flex(center,center);
           }
+          &.red {
+            border-color: $danger;
+          }
         }
       }
       .list-bar {
         @include containerStyle(90%, 6%, $role-team-dark, none, 20px);
-        margin-top: 20%;
+        margin-top: 15%;
         padding: 2px 3px;
         .progress {
           @include containerStyle(90%, 100%, $role-team1, none, 20px);

@@ -39,6 +39,7 @@ div.quest3
       SprintList.sprint(
         @delete-data="deleteData"
         @restore-data="restoreData"
+        @update-points="updatePoints"
         )
     button.btn-start(v-if="step === 3" @click="addStep") 練習去囉
       div 練習去囉
@@ -65,7 +66,7 @@ export default {
       showYellowPointer: true,
       questionSolved: false,
       deletedId: '',
-      restoredId: ''
+      restoredId: '',
     }
   },
   methods: {
@@ -82,6 +83,13 @@ export default {
     },
     restoreData(id){
       this.restoredId = id
+    },
+    updatePoints (newTotal) {
+      if (newTotal > 20 || newTotal === 0) {
+        this.questionSolved = false
+      } else {
+        this.questionSolved = true
+      }
     }
   },
   beforeCreate() {
