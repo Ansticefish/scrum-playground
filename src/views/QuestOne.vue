@@ -33,10 +33,11 @@ div.quest1
       button 點擊畫面任意處繼續
     button.btn-start(v-if="step === 2" @click="()=> this.step = 3") 準備好了
       div 準備好了
-    //- todo list
+    //- list
     div.drag-area(v-if="step > 2")
       div.drag-area__left
         div.item.top(
+          v-show="!list[0].isDropped"
           :class="[{'fade': step === 3}, {'dragged': list[0].isDragged}]"
           draggable="true"
           @dragstart="startDrag($event, 0)"
@@ -44,6 +45,7 @@ div.quest1
         ) 
           | 應徵者的線上履歷編輯器
         div.item.bottom(
+          v-show="!list[1].isDropped"
           :class="[{'fade': step === 3},{'dragged': list[1].isDragged}]"
           draggable="true"
           @dragstart="startDrag($event, 1)"
@@ -52,9 +54,10 @@ div.quest1
           | 後台職缺管理功能（資訊上架、
           br
           | 下架、顯示應徵者資料）
-      QuestOneList
+      QuestOneList(@hide-item="hideItem" @show-item="showItem")
       div.drag-area__right
         div.item.top(
+          v-show="!list[2].isDropped"
           :class="[{'fade': step === 3},{'dragged': list[2].isDragged}]"
           draggable="true"
           @dragstart="startDrag($event, 2)"
@@ -62,6 +65,7 @@ div.quest1
           ) 
           | 會員系統（登入、註冊、權限管理）
         div.item.bottom(
+          v-show="!list[3].isDropped"
           :class="[{'fade': step === 3},{'dragged': list[3].isDragged}]"
           draggable="true"
           @dragstart="startDrag($event, 3)"
@@ -127,6 +131,12 @@ export default {
     },
     endDrag(index) {
       this.list[index].isDragged = false
+    },
+    hideItem(id) {
+      this.list[id - 1].isDropped = true
+    },
+    showItem(id) {
+      this.list[id -1].isDropped = false
     }
   },  
   beforeCreate() {

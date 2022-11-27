@@ -13,8 +13,16 @@ div.todo
         img(src="~@/assets/image/todo-arrow.png")
         p 低
       div.list__blocks
-        div.block(v-for="n in 2")
-          p
+        div.block(
+        v-for="item in list"
+        :class="[{'fill': item.content}, {'dragged': item.isDragged}]" 
+        @dragenter="allowDrag($event)"
+        @dragover="allowDrag($event)"
+        @drop="addData($event, item)"
+        @dragstart="startDrag($event, item)"
+        @dragend="endDrag(item)"
+        )
+          p {{ item.content }}
 </template>
 
 <script>
@@ -25,35 +33,68 @@ export default {
   mixins: [drag, allowDrag],
   data() {
     return {
-      todoList: [
+      list: [
         {
-          id: '1',
-          point: 8,
-          content: '後台職缺管理功能（資訊上架、下架、顯示應徵者資料)',
+          id: 1,
+          content: '',
           isDragged: false,
+          originalId: -1
         },
         {
-          id: '2',
-          point: 5,
-          content: '應徵者的線上履歷編輯器',
+          id: 2,
+          content: '',
           isDragged: false,
+          originalId: -1
         },
         {
-          id: '3',
-          point: 13,
-          content: '會員系統（登入、註冊、權限管理）',
+          id: 3,
+          content: '',
           isDragged: false,
+          originalId: -1
         },
         {
-          id: '4',
-          point: 8,
-          content: '前台職缺列表、應徵',
+          id: 4,
+          content: '',
           isDragged: false,
+          originalId: -1
         },
       ],
-      deletedItems: []
     }
   },
+  methods: {
+    addData($event, item) {
+      const newItem = JSON.parse($event.dataTransfer.getData('application/json'))
+      const { id, content, originalId} = newItem
+      if (!item.content.length && originalId === undefined) {
+        // the block is empty && drag from outside
+        this.resetList(item.id - 1, item.id, content, id)
+        this.$emit('hide-item', id)
+      } else if (!item.content.length) {
+        // the block is empty && drag from inside
+        this.resetList(id -1, id, '', -1)
+        this.resetList(item.id -1, item.id, content, originalId)
+      } else if (item.content.length && originalId === undefined) {
+         // the block is occupied && drag from outside
+         this.$emit('show-item', item.originalId)
+         this.$emit('hide-item', id)
+         this.resetList(item.id -1, item.id, content, id)
+      } else {
+        // the block is occupied && drag from inside
+        if(item.id === id) return
+        this.$emit('show-item', item.originalId)
+        this.resetList(id - 1, id, '', -1)
+        this.resetList(item.id - 1, item.id, content, originalId)
+      }
+    },
+    resetList(index, id, content, originalId) {
+      this.$set(this.list, index, {
+        id,
+        content,
+        isDragged: false,
+        originalId,
+      })
+    }
+  }
 }
 </script>
 
@@ -63,7 +104,8 @@ export default {
   height: 95%;
   position: relative;
   margin: 0 auto;
-  @include listStyle (radial-gradient(50% 50% at 50% 50%, #00FFE0 0%, rgba(0, 255, 224, 0)100%),
+  @include listStyle (
+    radial-gradient(50% 50% at 50% 50%, #00FFE0 0%, rgba(0, 255, 224, 0)100%),
     rgba(0, 255, 224, 0.1),
     rgba(0, 255, 224, 0.2),
     rgba(0, 255, 224, 0.3),
@@ -72,7 +114,6 @@ export default {
     $primary-default,
     rgba(0, 255, 224, 0.7));
 }
-
 .dragged {
   opacity: 0.3;
 }

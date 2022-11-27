@@ -312,6 +312,7 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
       position: relative;
       &__indicator {
         @include position (absolute, $top: 5%, $left: 2.5%);
+        height: 95%;
         p {
           @extend %listCaption;
           color: $text-default;
@@ -329,6 +330,13 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
         .block {
           @include containerStyle(90%, calc(98%/4), transparent, 2px dashed #{$border}, 20px);
           margin-bottom: 2%;
+          cursor: grab;
+          &.fill {
+            border: 4px solid $primary-default;
+            background: $bg-dark60;
+            @include flex (flex-start, center);
+            padding: 1% 2%; 
+          }
         }
         .block-quest3 {
           @include containerStyle(90%, calc(98%/4), $bg-dark60, 4px solid #{$border}, 20px);
