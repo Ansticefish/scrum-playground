@@ -34,9 +34,7 @@ div.quest3
       | 你有時間記得先去註冊和熟悉唷 !
     //-lists 
     div.list-wrapper(v-if="step > 3" :class="{'hide': step === 6}")
-      TodoList.todo(
-        :showSideBar="false" 
-        :is-quest3="true" 
+      TodoList.todo( 
         :deletedId="deletedId"
         :restoredId="restoredId"
         @delete-sprint="deleteSprint"

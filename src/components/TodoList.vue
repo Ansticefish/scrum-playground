@@ -8,16 +8,7 @@ div.todo
       h2 產品待辦清單
       P Product Backlog 
     div.list 
-      div.list__indicator(v-if="showSideBar")
-        p 高
-        img(src="~@/assets/image/todo-arrow.png")
-        p 低
-      div.list__blocks(v-if="!isQuest3")
-        div.block(v-for="n in 2")
-          p
-      //- layout for quest 3
       div.list__blocks( 
-        v-if="isQuest3"
         @dragenter="allowDrag($event)"
         @dragover="allowDrag($event)"
         @drop="addData($event)")
@@ -40,14 +31,6 @@ import { v4 as uuidv4} from 'uuid'
 export default {
   name: 'TodoList',
   props: {
-    showSideBar: {
-      type: Boolean,
-      default: true
-    },
-    isQuest3: {
-      type: Boolean,
-      default: false
-    },
     deletedId: {
       type: String
     },

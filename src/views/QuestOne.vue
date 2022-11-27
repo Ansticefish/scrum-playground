@@ -52,7 +52,7 @@ div.quest1
           | 後台職缺管理功能（資訊上架、
           br
           | 下架、顯示應徵者資料）
-      TodoList
+      QuestOneList
       div.drag-area__right
         div.item.top(
           :class="[{'fade': step === 3},{'dragged': list[2].isDragged}]"
@@ -77,13 +77,13 @@ div.quest1
 
 <script>
 import Dialogue from '../components/Dialogue.vue'
-import TodoList from '../components/TodoList.vue'
+import QuestOneList from '../components/QuestOneList.vue'
 
 export default {
   name: 'QuestOne',
   components: {
     Dialogue,
-    TodoList,
+    QuestOneList,
   },
   data () {
     return {
