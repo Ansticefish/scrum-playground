@@ -198,7 +198,7 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
     padding: .5px 24px;
     @extend %h3;
     color: $bg-dark;
-    @include position (absolute, $top: 40px, $left: -11px);
+    @include position (absolute, $top: 25%, $left: -0.7%);
     // set up the shadow
     &::before {
       content: '';
@@ -227,7 +227,7 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
     }
   }
   .pointer {
-    @include position(absolute, $bottom: 13%, $right: 3%);
+    @include position(absolute, $bottom: 15%, $right: 3%);
     @include containerStyle(5%, 15%, #{$pointer});
     background-repeat: no-repeat;
     background-size: contain;

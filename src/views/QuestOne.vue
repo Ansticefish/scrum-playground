@@ -28,13 +28,22 @@ div.quest1
       strong 換你來試試看吧 ！
       br
       | 提示 ： 請把需求拖移至產品待辦清單 ， 並調整其優先順序。
+    Dialogue(:speaker="'PO'" :showPointer="true" @change-step="() => this.step += 1" v-if="step > 4")
+      | 哇喔完成惹 ， 尼太棒ㄌ！ 我們繼續吧 ！
   div.body
+    //- buttons
     div.btn-next(@click="()=> this.step = 2" v-if="step === 1")
       button 點擊畫面任意處繼續
-    button.btn-start(v-if="step === 2" @click="()=> this.step = 3") 準備好了
+    button.btn-start(v-if="step === 2" 
+    @click="()=> this.step = 3") 準備好了
       div 準備好了
+    button.btn-finish(v-if="step > 3 && step < 6" :disabled="blockFilled !== 4" 
+    @click="()=> this.step = 5") 我完成了
+      div 我完成了
+    div.btn-leave(v-if="step === 6"  @click="()=> this.$router.push('/quest2')")
+      button 點擊畫面任意處繼續
     //- list
-    div.drag-area(v-if="step > 2")
+    div.drag-area(v-if="step > 2" :class="{'fade': step === 6}")
       div.drag-area__left(@dragenter.prevent @dragover.prevent @drop="resetList($event)")
         div.item.top(
           v-show="!list[0].isDropped"
@@ -124,7 +133,8 @@ export default {
       deletedId: {
         time: 0, 
         id: -1
-      }
+      },
+      blockFilled: 0
     }
   },
   methods: {
@@ -141,9 +151,11 @@ export default {
     },
     hideItem(id) {
       this.list[id - 1].isDropped = true
+      this.blockFilled += 1
     },
     showItem(id) {
       this.list[id -1].isDropped = false
+      this.blockFilled -= 1
     },
     resetList($event) {
       const {id, originalId} = JSON.parse($event.dataTransfer.getData('application/json'))
@@ -152,7 +164,7 @@ export default {
       this.deletedId.time += 1
       this.deletedId.id = id
     }
-  },  
+  }, 
   beforeCreate() {
     this.$store.commit('updateProgress', '16.6vw')
   }
@@ -183,10 +195,20 @@ export default {
       @include button (10vw, 60px, $button-linear, $primary-default, $text-default);
       @include position (absolute, $bottom: 2%, $right: 2%);
     }
+    .btn-finish {
+      @extend .btn-start;
+      z-index: 1;
+    }
+    .btn-leave {
+      @extend %button-leave;
+    }
     .drag-area {
       height: 100%;
       width: 100%;
       display: flex;
+      &.fade {
+        opacity: 0.2;
+      }
       &__left, &__right {
         height: 100%;
         width: calc(100%/3);
