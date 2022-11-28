@@ -35,7 +35,7 @@ div.quest1
       div 準備好了
     //- list
     div.drag-area(v-if="step > 2")
-      div.drag-area__left
+      div.drag-area__left(@dragenter.prevent @dragover.prevent @drop="resetList($event)")
         div.item.top(
           v-show="!list[0].isDropped"
           :class="[{'fade': step === 3}, {'dragged': list[0].isDragged}]"
@@ -54,8 +54,11 @@ div.quest1
           | 後台職缺管理功能（資訊上架、
           br
           | 下架、顯示應徵者資料）
-      QuestOneList(@hide-item="hideItem" @show-item="showItem")
-      div.drag-area__right
+      QuestOneList.list(
+        @hide-item="hideItem" 
+        @show-item="showItem" 
+        :deletedId="deletedId")
+      div.drag-area__right(@dragenter.prevent @dragover.prevent @drop="resetList($event)")
         div.item.top(
           v-show="!list[2].isDropped"
           :class="[{'fade': step === 3},{'dragged': list[2].isDragged}]"
@@ -117,7 +120,11 @@ export default {
           isDragged: false,
           isDropped: false,
         }
-      ]
+      ],
+      deletedId: {
+        time: 0, 
+        id: -1
+      }
     }
   },
   methods: {
@@ -137,6 +144,13 @@ export default {
     },
     showItem(id) {
       this.list[id -1].isDropped = false
+    },
+    resetList($event) {
+      const {id, originalId} = JSON.parse($event.dataTransfer.getData('application/json'))
+      if(originalId === undefined) return
+      this.showItem(originalId)
+      this.deletedId.time += 1
+      this.deletedId.id = id
     }
   },  
   beforeCreate() {

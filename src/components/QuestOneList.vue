@@ -30,6 +30,11 @@ import { drag, allowDrag } from '../utils/mixins'
 
 export default {
   name: 'QuestOneList',
+  props: {
+    deletedId: {
+      type: Object
+    }
+  },
   mixins: [drag, allowDrag],
   data() {
     return {
@@ -93,6 +98,16 @@ export default {
         isDragged: false,
         originalId,
       })
+    },
+    deleteItem () {
+      const index = this.deletedId.id - 1
+      this.resetList(index, index + 1, '', -1)
+    }
+  },
+  watch: {
+    'deletedId':{ 
+      handler: 'deleteItem',
+      deep: true
     }
   }
 }
