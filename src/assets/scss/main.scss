@@ -18,7 +18,7 @@ $danger: #FF0000;
 
 // linear
 $primary-linear: linear-gradient(180deg, rgba(0, 255, 224, 0) 0%, rgba(0, 255, 224, 0.25) 60.42%, rgba(0, 255, 224, 0.45) 79.69%, rgba(0, 255, 224, 0.7) 91.67%, rgba(0, 255, 224, 0.9) 100%);
-$sm-linear: linear-gradient(180deg, rgba(211, 85, 255, 0) 0%, rgba(211, 85, 255, 0.05) 59.9%, rgba(211, 85, 255, 0.2) 78.12%, rgba(211, 85, 255, 0.6) 100%);
+$sm-linear: linear-gradient(180deg, rgba(211, 85, 255, 0) 0%, rgba(211, 85, 255, 0.03) 59.9%, rgba(211, 85, 255, 0.12) 78.12%, rgba(211, 85, 255, 0.36) 100%),rgba(10, 13, 20, 0.6);
 $team1-linear:  linear-gradient(180deg, rgba(255, 199, 0, 0) 0%, rgba(255, 199, 0, 0.03) 59.9%, rgba(255, 199, 0, 0.12) 78.12%, rgba(255, 199, 0, 0.36) 100%), rgba(10, 13, 20, 0.6);
 $team2-linear: linear-gradient(180deg, rgba(255, 122, 0, 0) 0%, rgba(255, 122, 0, 0.03) 59.9%, rgba(255, 122, 0, 0.12) 78.12%, rgba(255, 122, 0, 0.36) 100%),rgba(10, 13, 20, 0.6);
 $button-linear: linear-gradient(0deg, rgba(0,255, 224, 0)0%,#00ffe0 100%), #008d96;
@@ -73,6 +73,7 @@ $pointer-orange: url('~@/assets/image/pointer-orange.png');
 $shadow-green: url('~@/assets/image/popUp-shadow.png');
 $shadow-orange: url('~@/assets/image/popUp-shadow-orange.png');
 $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
+$shadow-purple: url('~@/assets/image/popUp-shadow-purple.png');
 
 // mixin
 @mixin containerStyle ($w, $h, $bg-color, $border: none, $border-radius: 0) {
@@ -237,22 +238,25 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
   }
 }
 
-
+//could be deleted after all characters are imported using Character.vue 
 %character {
   width: 22vw;
   // set up height so that the characters will also shrink with height
   height: 100%;
   text-align: center;
+
   .hole {
     height: 25%;
     object-fit: contain;
   }
-  .light {   
+
+  .light {
     height: 130%;
     position: relative;
     top: -25%;
     object-fit: contain;
   }
+
   .character {
     height: 100%;
     position: relative;
@@ -260,7 +264,6 @@ $shadow-yellow: url('~@/assets/image/popUp-shadow-yellow.png');
     object-fit: contain;
   }
 }
-
 
 @mixin listStyle ($bg4, $bg3, $bg2, $container, $head, $p, $border, $point){
   width: 30%;

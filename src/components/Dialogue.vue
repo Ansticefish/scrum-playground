@@ -1,5 +1,5 @@
 <template lang="pug">
-div.dialogue(:class="[{'orange': orange}, {'yellow': yellow}]") 
+div.dialogue(:class="[{'orange': orange}, {'yellow': yellow}, {'purple': purple}]") 
   div.name {{ speaker }}
   div.content
     slot
@@ -24,6 +24,10 @@ export default {
       default: false
     },
     yellow: {
+      type: Boolean,
+      default: false
+    },
+    purple: {
       type: Boolean,
       default: false
     }
@@ -63,6 +67,17 @@ export default {
     #FFC700,
     $shadow-yellow,
     $pointer-yellow);
+  }
+
+  &.purple {
+    @include popUp (70%, fit-content,
+    $role-sm,
+    $sm-linear,
+    rgba(211, 85, 255, 0.8),
+    rgba(211, 85, 255, 0.95),
+    $shadow-purple,
+    $pointer-purple
+    );
   }
 }
 </style>
