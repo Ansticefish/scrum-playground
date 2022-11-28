@@ -103,7 +103,7 @@ export default {
   },
   data () {
     return {
-      step: 4,
+      step: 1,
       list: [
         {
           id: 1,
