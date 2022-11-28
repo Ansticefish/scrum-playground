@@ -142,6 +142,7 @@ export default {
       this.step += 1
     },
     startDrag($event, index) {
+      if(this.step === 3) return
       $event.dataTransfer.clearData()
       $event.dataTransfer.setData('application/json', JSON.stringify(this.list[index]))
       this.list[index].isDragged = true
