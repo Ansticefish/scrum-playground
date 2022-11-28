@@ -37,7 +37,7 @@ div.quest1
     button.btn-start(v-if="step === 2" 
     @click="()=> this.step = 3") 準備好了
       div 準備好了
-    button.btn-finish(v-if="step > 3 && step < 6" :disabled="blockFilled !== 4" 
+    button.btn-finish(v-if="step > 3 && step < 5" :disabled="blockFilled !== 4" 
     @click="()=> this.step = 5") 我完成了
       div 我完成了
     div.btn-leave(v-if="step === 6"  @click="()=> this.$router.push('/quest2')")
