@@ -2,8 +2,32 @@
 div.quest2 
   div.head 
     Character.character-lt(v-if="step < 3")
+    //- dialogue (head: EE)
+    Dialogue.dialogue-EE(
+      v-if="step === 4"
+      :speaker="'EE'"
+      :yellow="true" 
+      :showPointer="true" 
+      @change-step="changeStep"
+      )
+      | 欸新來的 ， 你應該不知道點數是什麼意思吧ㄏㄏ ， 我來跟你介紹一下吧～ 
+      span Story Point 
+      | 目的是為了
+      span 衡量速度 
+      | ， 是用大概花費的時間預估出的相對點數哦 。
+    Dialogue.dialogue-EE(
+      v-if="step === 5"
+      :speaker="'EE'"
+      :yellow="true" 
+      :showPointer="true" 
+      @change-step="() => this.$router.push('/quest3')"
+      )
+      | 以 
+      span 「 費氏數列 」 的 1 、2 、3 、5 、8 、13 、21 
+      | 來估算各項 Story 的分數 。 Story Point 越小 ， 表示這個 Story 花費時間越少 ； 越大 ， 花費時間則越多 。 如果出現了一個 21 分 ， 可能表示這個 Story 太龐大 ， 需要再拆分細項執行唷 ！
     Character.character-rt1(:color="'yellow'" v-if="step > 2")
     Character.character-rt2(:color="'red'" v-if="step > 2")
+    //- dialogue (head: PO)
     Dialogue(
       v-if="step === 1"
       :speaker="'PO'" 
@@ -32,7 +56,9 @@ div.quest2
         img(src="~@/assets/image/quest2-plan.png") 
       template(v-slot:content)
         img(src="~@/assets/image/quest2-plan.png")
-    //- dialogues
+    //- story point
+    StoryPoint(v-if="step > 3" :step="step")
+    //- dialogues (bottom: MM)
     div.bottom-wrapper
       Dialogue(
         v-if="step === 2"
@@ -57,6 +83,7 @@ div.quest2
        span 20 點
        | 左右。   
       Character.character-b(
+        v-if="step < 4"
         :color="'purple'"
         )
 </template>
@@ -65,13 +92,15 @@ div.quest2
 import Dialogue from '../components/Dialogue.vue';
 import CircleGlass from '../components/CircleGlass.vue';
 import Character from '../components/Character.vue';
+import StoryPoint from '../components/StoryPoint.vue';
 
 export default {
   name: 'QuestTwo',
   components: {
     Dialogue,
     CircleGlass,
-    Character
+    Character,
+    StoryPoint
   },
   data () {
     return {
@@ -92,11 +121,12 @@ export default {
 <style lang="scss" scoped>
 .quest2 {
 @include containerStyle(100vw, 100vh, url('~@/assets/image/bg.png'));
+overflow: hidden;
   .head {
     @include flex (space-around, center);
     width: 100%;
     height: 30%;
-    padding: 1% 0.3%;
+    padding: 1%;
     .character-lt {
       height: 120%;
       margin-top: 5%;
@@ -106,24 +136,29 @@ export default {
       height: 100%;
       margin-top: 5%;
       margin-left: auto;
-      margin-right: -3%;
+      margin-right: -8%;
     }
     .character-rt2 {
       height: 100%;
       margin-top: 5%;
+      margin-right: -5%;
+    }
+    .dialogue-EE {
+      z-index: 1;
     }
   }
   .body {
     height: 70%;
+    width: 100%;
     .main-content1 {
       height: 80%;
-      margin: 0 auto;
+      margin: 1% auto;
     }
     .main-content2 {
       height: 80%;
       margin: 0 auto;
-      margin-top: -15%;
-      margin-bottom: 15%;
+      margin-top: -12%;
+      margin-bottom: 12%;
     }
     .main-content3 {
       @extend .main-content2;
