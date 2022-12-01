@@ -35,11 +35,22 @@ div.quest4
       br
       | 推薦工具 ： 
       img(src="~@/assets/image/logo_confluence.png")
+    Dialogue(
+      v-if="step === 4"
+      :speaker="'EE'"
+      :yellow="true"
+      )
+      strong 換你來試試看吧 ！
+      br
+      | 在這經典的 Scrum 流程圖中 ， 這些流程分別代表哪一個會議呢 ？
+      br
+      | 提示 ： 把右側的三個流程拖移至正確的位置上吧 ！
     Character.character(
       :color="'yellow'"
       )
   div.body
     SprintLesson(v-if="step === 2 || step === 3")
+    QuestFourList(v-if="step > 3")
     button.btn-next(
       v-if="step === 3" 
       @click="changeStep"
@@ -51,6 +62,7 @@ div.quest4
 import Dialogue from '../components/Dialogue.vue';
 import Character from '../components/Character.vue';
 import SprintLesson from '../components/SprintLesson.vue';
+import QuestFourList from '../components/QuestFourList.vue';
 
 export default {
   name: 'QuestFour',
@@ -58,10 +70,11 @@ export default {
     Dialogue,
     Character,
     SprintLesson,
+    QuestFourList,
   },
   data () {
     return {
-      step: 1,
+      step: 4,
     }
   },
   methods: {
@@ -87,8 +100,7 @@ export default {
 
     .character {
       @extend %character;
-      height: 130%;
-      margin-top: 5%;
+      height: 110%;
     }
   }
 
