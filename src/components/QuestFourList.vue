@@ -15,6 +15,11 @@ div.sprint-process
     v-for="item in dropList"
     :key="item.id"
     :class="[item.class, { 'hide': !item.isDropped}, {'alarm': item.isFalse}]"
+    @dragenter="allowDrag"
+    @dragover="allowDrag"
+    @drop="addData($event, item)"
+    @dragstart="startDrag($event, item)"
+    @dragend="endDrag(item)"
     )
     h2 {{ item.title }}
     p {{ item.subtitle}}
@@ -22,13 +27,18 @@ div.sprint-process
     div.drag-item(
       v-for="item in dragList"
       :key="item.id"
-      :class="[item.class, {'hide': item.isDropped}]"
+      :class="[item.class, {'dragged': item.isDragged},{'hide': item.isDropped}]"
+      draggable="true"
+      @dragstart="startDrag($event, item)"
+      @dragend="endDrag(item)"
     )
       h2 {{ item.title}}
       p {{ item.subtitle}}
 </template>
 
 <script>
+import { drag, allowDrag } from '../utils/mixins' 
+
 export default {
   name: 'QuestFourList',
   data () {
@@ -56,6 +66,8 @@ export default {
           class: 'drop1',
           title: '短衝檢視會議',
           subtitle: 'Sprint Review',
+          correctTitle: '每日站立會議',
+          originalId: -1,
           isDragged: false,
           isDropped: false,
           isFalse: false
@@ -65,6 +77,8 @@ export default {
           class: 'drop2',
           title: '每日站立會議',
           subtitle: 'Daily Scrum',
+          correctTitle: '短衝檢視會議',
+          originalId: -1,
           isDragged: false,
           isDropped: false,
           isFalse: false
@@ -74,9 +88,11 @@ export default {
           class: 'drop3',
           title: '短衝自省會議',
           subtitle: 'Sprint Retrospective',
+          correctTitle: '短衝自省會議',
+          originalId: -1,
           isDragged: false,
-          isDropped: true,
-          isFalse: true
+          isDropped: false,
+          isFalse: false
         }
       ],
       dragList: [
@@ -102,9 +118,53 @@ export default {
           title: '短衝自省會議',
           subtitle: 'Sprint Retrospective',
           isDragged: false,
-          isDropped: true,
+          isDropped: false,
         }
-      ]
+      ],
+    }
+  },
+  mixins: [drag, allowDrag],
+  methods: {
+    addData ($event, item) {
+      const draggedItem = JSON.parse($event.dataTransfer.getData('application/json'))
+      const { id, title, subtitle, originalId } = draggedItem
+      const falseAnswer = this.correctOrNot(title, item.correctTitle)
+      if ( originalId === undefined && item.originalId === -1) {
+        // drag from outside onto an empty block
+        this.resetDropList(item.id - 1, item, title, subtitle, id, true, falseAnswer)
+        this.dragList[id - 1].isDropped = true
+      } else if (item.originalId === -1) {
+        // drag inside the list onto an empty block
+        this.resetDropList(id -1, draggedItem, title, subtitle, -1, false, false)
+        this.resetDropList(item.id - 1, item, title, subtitle, originalId, true, falseAnswer)
+      } else if (originalId === undefined && item.originalId !== -1) {
+        // drag from outside onto an occupied block
+        this.dragList[item.originalId -1].isDropped = false
+        this.resetDropList(item.id -1, item, title, subtitle, id, true, falseAnswer)
+        this.dragList[id - 1].isDropped = true
+      } else {
+        // drag from inside onto an occupied block
+        this.dragList[item.originalId - 1].isDropped = false
+        this.resetDropList(id - 1, draggedItem, title, subtitle, -1, false, false)
+        this.resetDropList(item.id - 1, item, title, subtitle, originalId, true, falseAnswer)
+      }
+    },
+    resetDropList(index, item, title, subtitle, originalId, isDropped, isFalse) {
+      this.$set(this.dropList, index, {
+        ...item,
+        title,
+        subtitle,
+        originalId,
+        isDropped,
+        isFalse
+      })
+    },
+    correctOrNot (title, correctTitle) {
+      if (title === correctTitle) {
+        return false
+      } else {
+        return true
+      }
     }
   }
 }
@@ -118,6 +178,7 @@ export default {
     text-align: center;
     backdrop-filter: blur(5px);
     white-space: nowrap;
+    cursor: grab;
     h2 {
       @extend %h2;
       color: #{$h2};
@@ -205,6 +266,12 @@ export default {
     @include position (absolute, $top: 8%, $right: 5%);
     .drag-item {
       @include blockStyle ($role-team1, $role-team1, $text-tint);
+      &.dragged {
+        opacity: 0.3;
+      }
+      &.hide {
+        opacity: 0;
+      }
     }
   }
 }
