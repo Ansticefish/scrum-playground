@@ -34,6 +34,8 @@ div.sprint-process
     )
       h2 {{ item.title}}
       p {{ item.subtitle}}
+  button.btn-finish(:disabled="correctBlocks < 3" :class="{'hide': !showButton }" @click="clickButton") 我完成了
+      div 我完成了
 </template>
 
 <script>
@@ -121,6 +123,7 @@ export default {
           isDropped: false,
         }
       ],
+      showButton: true
     }
   },
   mixins: [drag, allowDrag],
@@ -165,6 +168,21 @@ export default {
       } else {
         return true
       }
+    },
+    clickButton () {
+      this.$emit('change-step')
+      this.showButton = false
+    }
+  },
+  computed: {
+    correctBlocks () {
+      let filledBlocks = 0
+      for (let i = 0; i < this.dropList.length; i++) {
+        if (this.dropList[i].isDropped === true && this.dropList[i].isFalse === false ){
+          filledBlocks += 1
+        }
+      }
+      return filledBlocks
     }
   }
 }
@@ -272,6 +290,14 @@ export default {
       &.hide {
         opacity: 0;
       }
+    }
+  }
+
+  .btn-finish {
+    @include button (10vw, 60px, $button-linear, $primary-default, $text-default);
+    @include position (absolute, $bottom: -3%, $right: 8%);
+    &.hide {
+      display: none;
     }
   }
 }

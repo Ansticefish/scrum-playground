@@ -33,7 +33,7 @@ div.quest3
       br
       | 你有時間記得先去註冊和熟悉唷 !
     //-lists 
-    div.list-wrapper(v-if="step > 3" :class="{'hide': step === 6}")
+    div.list-wrapper(v-if="step > 3" )
       TodoList.todo( 
         :deletedId="deletedId"
         :restoredId="restoredId"
@@ -150,9 +150,6 @@ export default {
       @include flex(flex-start, center);
       .todo, .sprint {
         width: 45%;
-      }
-      &.hide {
-        opacity: 0.1;
       }
     }
     .btn-start, .btn-next {

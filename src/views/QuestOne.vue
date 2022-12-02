@@ -43,7 +43,7 @@ div.quest1
     div.btn-leave(v-if="step === 6"  @click="()=> this.$router.push('/quest2')")
       button 點擊畫面任意處繼續
     //- list
-    div.drag-area(v-if="step > 2" :class="{'fade': step === 6}")
+    div.drag-area(v-if="step > 2")
       div.drag-area__left(@dragenter.prevent @dragover.prevent @drop="resetList($event)")
         div.item.top(
           v-show="!list[0].isDropped"
@@ -207,9 +207,6 @@ export default {
       height: 100%;
       width: 100%;
       display: flex;
-      &.fade {
-        opacity: 0.2;
-      }
       &__left, &__right {
         height: 100%;
         width: calc(100%/3);

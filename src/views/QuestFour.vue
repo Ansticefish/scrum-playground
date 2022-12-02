@@ -45,17 +45,27 @@ div.quest4
       | 在這經典的 Scrum 流程圖中 ， 這些流程分別代表哪一個會議呢 ？
       br
       | 提示 ： 把右側的三個流程拖移至正確的位置上吧 ！
+    Dialogue(
+      v-if="step > 4"
+      :speaker="'EE'"
+      :yellow="true"
+      :show-pointer="true"
+      @change-step="changeStep" 
+      )
+      | 哼哼沒想到你這麼快就學會惹 ， 快結束了加油加油 ！
     Character.character(
       :color="'yellow'"
-      )
+      )  
   div.body
     SprintLesson(v-if="step === 2 || step === 3")
-    QuestFourList(v-if="step > 3")
+    QuestFourList(v-if="step > 3" @change-step="changeStep")
     button.btn-next(
       v-if="step === 3" 
       @click="changeStep"
       ) 練習去囉
       div 練習去囉
+    div.btn-leave(@click="()=> this.$router.push('/quest5')" v-if="step === 6")
+      button 點擊畫面任意處繼續
 </template>
 
 <script>
@@ -110,6 +120,9 @@ export default {
     .btn-next {
       @include button (10vw, 60px, $button-linear, $primary-default, $text-default);
       @include position (absolute, $bottom: 8%, $right: 2%);
+    }
+    .btn-leave {
+      @extend %button-leave;
     }
   }
 }
