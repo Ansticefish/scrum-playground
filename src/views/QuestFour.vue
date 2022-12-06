@@ -84,7 +84,7 @@ export default {
   },
   data () {
     return {
-      step: 4,
+      step: 1,
     }
   },
   methods: {
@@ -102,7 +102,6 @@ export default {
 .quest4 {
   @include containerStyle(100vw, 100vh, url('~@/assets/image/bg.png'));
   padding: 2% 0;
-
   .head {
     @include flex (space-around, center);
     width: 100%;
@@ -115,11 +114,21 @@ export default {
   }
 
   .body {
-    height: 70%;
+    height: 72%;
     position: relative;
+    overflow: auto;
+    &::-webkit-scrollbar {
+      background: $primary-dark;
+      width: 10px;
+      border-radius: 15px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $primary-linear; 
+      border-radius: 15px;
+    }
     .btn-next {
       @include button (10vw, 60px, $button-linear, $primary-default, $text-default);
-      @include position (absolute, $bottom: 8%, $right: 2%);
+      @include position (fixed, $bottom: 5%, $right: 2%);
     }
     .btn-leave {
       @extend %button-leave;

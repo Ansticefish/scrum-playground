@@ -63,15 +63,16 @@ export default {
 <style lang="scss" scoped>
 .lessons-container {
   width: 95%;
-  height: 90%;
-  margin: 2% auto;
-  padding: 2%;
+  height: fit-content;
+  margin: -1% auto;
+  padding: 1%;
+  overflow: auto;
   @include flex (space-between, flex-start);
   .lesson {
     width: calc(100% /3 - 2%);
     text-align: center;
     img {
-      width: 100%;
+      width: 95%;
     }
     .title-wrapper {
       @include containerStyle(100%, 30%, $bg-dark60, 4px solid $role-team1, 20px);
