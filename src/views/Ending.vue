@@ -157,13 +157,10 @@ export default {
 
 @keyframes lightsShine {
   0% {
-    opacity: 50%;
+    opacity: 0.5;
   }
   50% {
-    opacity: 80%;
-  }
-  100% {
-    opacity: 100%;
+    opacity: 0.8;
   }
 }
 </style>
