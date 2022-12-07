@@ -114,7 +114,7 @@ export default {
         object-fit: contain;
       }
   }
-  &__purple {
+  .characters__purple {
     .hole {
       position: relative;
       top: 80%;

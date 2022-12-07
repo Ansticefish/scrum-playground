@@ -172,6 +172,7 @@ overflow: hidden;
       .character-b {
         height: 100%;
         margin-left: auto;
+        margin-bottom: 3%;
       }
     }
   }

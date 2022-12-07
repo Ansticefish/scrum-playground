@@ -120,39 +120,39 @@ export default {
 
 .g-light-left {
   @include position (absolute, $top: 2%, $left: 30%);
-  animation: lightsShine 2s ease-in-out infinite alternate;
+  animation: lightsShine 2s ease-in-out alternate infinite;
 }
 .p-light-left {
   @include position (absolute, $top: 15%, $left: 15%);
-  animation: lightsShine 2s ease-in-out 1s infinite alternate;
+  animation: lightsShine 2s ease-in-out 1s alternate infinite;
 }
 .r-light-left {
   @include position (absolute, $top: 35%, $left: 25%);
-  animation: lightsShine 2s ease-in-out 1.5s infinite alternate;
+  animation: lightsShine 2.5s ease-in-out alternate infinite;
 }
 .y-light-left {
   @include position (absolute, $top: 55%, $left: 17%);
-  animation: lightsShine 1s ease-in-out infinite alternate;
+  animation: lightsShine 1s ease-in-out alternate infinite;
 }
 
 .y-light-right {
   @include position (absolute, $top: -1%, $right: 25%);
-  animation: lightsShine 1s ease-in-out .5s infinite alternate;
+  animation: lightsShine 1s ease-in-out .5s alternate infinite;
 }
 
 .r-light-right {
   @include position (absolute, $top: 20%, $right: 15%);
-  animation: lightsShine 2s ease-in-out 2.5s infinite alternate;
+  animation: lightsShine 2s ease-in-out 2.5s alternate infinite;
 }
 
 .g-light-right {
   @include position (absolute, $top: 35%, $right: 25%);
-  animation: lightsShine 2.5s ease-in-out .5s infinite alternate;
+  animation: lightsShine 2.5s ease-in-out .5s alternate infinite;
 }
 
 .p-light-right {
   @include position (absolute, $top: 56%, $right: 17%);
-  animation: lightsShine 1.5s ease-in-out infinite alternate;
+  animation: lightsShine 1.5s ease-in-out alternate infinite;
 }
 
 @keyframes lightsShine {
