@@ -160,7 +160,7 @@ export default {
     opacity: 50%;
   }
   50% {
-    opacity: 80%
+    opacity: 80%;
   }
   100% {
     opacity: 100%;
