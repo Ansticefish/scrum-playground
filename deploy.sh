@@ -15,7 +15,7 @@ cd dist
 git init
 git branch -M main
 git add -A
-git commit -m 'deploy: Quest1 & Quest3'
+git commit -m 'deploy: all pages and function done'
 
 # if you are deploying to https://<USERNAME>.github.io
 # git push -f https://github.com/<USERNAME>/<USERNAME>.GitHub.io.git main
