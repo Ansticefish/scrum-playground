@@ -244,7 +244,7 @@ export default {
           padding: 3%;
           @extend %body;
           color: $text-default;
-          animation: dragDemo 1s ease-in;
+          animation: dragDemo 2.5s ease-in infinite;
           img {
             @include position (absolute, $bottom: -15%, $right: 20%);
           }
@@ -267,6 +267,14 @@ export default {
     width: fit-content;
     height: fit-content;
     padding: 2% 3%;
+  }
+  65% {
+    @include containerStyle(78%, calc(72%/4), $bg-dark60, 4px solid $primary-default , 20px);
+    @include position (absolute, $top: 17%, $left: -88%);
+  }
+  100% {
+    @include containerStyle(78%, calc(72%/4), $bg-dark60, 4px solid $primary-default , 20px);
+    @include position (absolute, $top: 17%, $left: -88%);
   }
 }
 </style>
