@@ -159,7 +159,7 @@ export default {
         }
       }
       .description {
-        @include containerStyle(60%, 35%, $bg-dark60, 4px solid $primary-default, 20px);
+        @include containerStyle(75%, 35%, $bg-dark60, 4px solid $primary-default, 20px);
         backdrop-filter: blur(5px);
         padding: 3% 5%;
         @extend %body;
