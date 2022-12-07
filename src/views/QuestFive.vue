@@ -20,10 +20,11 @@ div.quest5
       :color="'red'"
     )
   div.body
-    QuestFiveRadio
+    QuestFiveRadio(@enable-button="(data) => this.allowClick = data")
     button.btn-next(
       v-if="step > 1" 
       @click="changeStep"
+      :disabled="!allowClick"
       ) 我選好了
       div 我選好了
 </template>
@@ -42,7 +43,8 @@ export default {
   },
   data () {
     return {
-      step: 1
+      step: 1,
+      allowClick: false
     }
   },
   methods: {
