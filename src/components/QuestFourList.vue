@@ -18,6 +18,7 @@ div.sprint-process
     @dragenter="allowDrag"
     @dragover="allowDrag"
     @drop="addData($event, item)"
+    draggable="true"
     @dragstart="startDrag($event, item)"
     @dragend="endDrag(item)"
     )

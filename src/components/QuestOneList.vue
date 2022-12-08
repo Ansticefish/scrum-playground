@@ -19,6 +19,7 @@ div.todo
         @dragenter="allowDrag($event)"
         @dragover="allowDrag($event)"
         @drop="addData($event, item)"
+        draggable="true"
         @dragstart="startDrag($event, item)"
         @dragend="endDrag(item)"
         )
