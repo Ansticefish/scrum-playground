@@ -7,9 +7,12 @@
 <br>
 <br>
 
-## 專案技術
-### 1. Drag and Drop API：
-使用drag and drop API設定能被拖拉的物件以及放置物件的區域。當事件被觸發時，再利用DataTransfer取得被拖曳物件的資訊，並利用Javascript去判斷資料與畫面該如何變動。考量到使用的方便性，使用以下邏輯設計拖拉行為：
+## 專案技術與環境
+使用vue2作為開發的環境，並搭配pug、scss這兩個preprocessor增加開發效率。
+
+## 專案開發重點與設計
+### 1. 拖拉效果設計：
+使用drag and drop API設定能被拖拉的物件以及放置物件的區域。當事件被觸發時，再利用DataTransfer取得被拖曳物件的資訊，最後利用Javascript去判斷資料與畫面該如何變動。考量到使用的方便性，使用以下邏輯設計拖拉行為：
 <br>
 
 <ul>
@@ -33,3 +36,16 @@
 
 ![drag and drop](/src/assets/forREADME/drag-demo3.gif "拖拉範例3：多種修改資料方式")
 <br>
+
+### 2. 內容元件化：
+此次UI稿中含有許多重複的元素與樣式，例如角色、對話框、圖表等，為了增加開發的效率與未來修改的便利性，以main.scss統一管理共通的樣式，並將重複的區域做成vue component。
+
+以對話框元件為例，對話框的樣式已全部被統整在component內，未來在使用時，只需要引入dialogue.vue，並透過prop傳入對話框的顏色、說話者、內容、是否顯示pointer以及點擊pointer之後的動作等，就能快速在頁面上修改或新增對話框。
+
+![dialogue demo](/src/assets/forREADME/dialogue-demo.png "對話框範例程式碼") <br><br>
+![dialogue UI demo](/src/assets/forREADME/dialogue-ui-demo.png "對話框範例圖") <br><br>
+
+### 3. 使用相對單位排版，製作RWD效果
+此次專案的排版主要以寬1440px的桌機為主，並搭配vw、vh、%等相對單位，讓頁面在不同尺寸的螢幕下，仍能正常顯示。
+
+![RWD](/src/assets/forREADME/RWD-demo.gif "拖拉範例2：樣式改變")
