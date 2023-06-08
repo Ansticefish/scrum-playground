@@ -238,10 +238,29 @@ $shadow-purple: url('~@/assets/image/popUp-shadow-purple.png');
     @include containerStyle(5%, 15%, #{$pointer});
     background-repeat: no-repeat;
     background-size: contain;
+    transition: opacity 0.1s ease-in;
+    animation: pointerJump 1s alternate infinite;
     &:hover {
       cursor: pointer;
+      opacity: 0.6;
     }
   }
+}
+
+@keyframes pointerJump {
+  0% {
+    transform: translateY(45%);
+  }
+  35% {
+    transform: translateY(48%);
+  }
+  65% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(35%);
+  }
+
 }
 
 //could be deleted after all characters are imported using Character.vue 
