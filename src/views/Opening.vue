@@ -167,6 +167,7 @@ export default {
     .next-btn {
       @include button (13vw, 60px, $button-linear, $primary-default, $text-default);
       margin-top: 6%;
+      z-index: 100;
     }
   }
 }
