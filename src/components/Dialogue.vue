@@ -41,8 +41,80 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// set up the style for dialogue
+@mixin dialogue ($w, $h, $color, $bg, $shadow1, $shadow2, $shadowImg, $pointer) {
+  @include containerStyle(#{$w}, #{$h},#{$bg}, 2px solid #{$color}, 40px);
+  box-shadow: 0px 0px 24px 8px #{$shadow1}, 0px 0px 8px 8px #{$shadow2};
+  backdrop-filter: blur(5px);
+  position: relative;
+  @include flex (flex-start, center);
+  padding: 2% 6%;
+  padding-left: 8%;
+  .name {
+    @include containerStyle(fit-content, fit-content, #{$color});
+    padding: .5px 24px;
+    @extend %h3;
+    color: $bg-dark;
+    @include position (absolute, $top: 25%, $left: -0.7%);
+    // set up the shadow
+    &::before {
+      content: '';
+      background-image: #{$shadowImg};
+      width: 10px;
+      height: 52px;
+      @include position (absolute, $top: 0, $left:0 );
+      box-shadow: 0px 0px 24px 2px #{$shadow1}, 0px 0px 8px 0px #{$shadow2};
+      z-index: -1;
+    }
+  }
+  .content {
+    width: 100%;
+    height: fit-content;
+    @extend %body;
+    color: $text-default;
+    span {
+      color: $text-tint;
+    }
+    img {
+      height: 180%;
+      @include position (relative, $top: 10px);
+    }
+    strong {
+      @extend %h2;
+    }
+  }
+  .pointer {
+    @include position(absolute, $bottom: 15%, $right: 3%);
+    @include containerStyle(5%, 15%, #{$pointer});
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: opacity 0.1s ease-in;
+    animation: pointerJump 1s alternate infinite;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.6;
+    }
+  }
+}
+
+@keyframes pointerJump {
+  0% {
+    transform: translateY(45%);
+  }
+  35% {
+    transform: translateY(48%);
+  }
+  65% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(35%);
+  }
+
+}
+
 .dialogue {
-  @include popUp (
+  @include dialogue (
   70%, fit-content, 
   $primary-default, 
   $pop-up-linear, 
@@ -51,7 +123,7 @@ export default {
   $shadow-green,
   $pointer-green);
   &.orange {
-    @include popUp (70%, fit-content,
+    @include dialogue (70%, fit-content,
     $role-team2,
     $team2-linear,
     #FF5C00,
@@ -60,7 +132,7 @@ export default {
     $pointer-orange);
   }
   &.yellow {
-    @include popUp (70%, fit-content,
+    @include dialogue (70%, fit-content,
     $role-team1,
     $team1-linear,
     #FFC700,
@@ -70,7 +142,7 @@ export default {
   }
 
   &.purple {
-    @include popUp (70%, fit-content,
+    @include dialogue (70%, fit-content,
     $role-sm,
     $sm-linear,
     rgba(211, 85, 255, 0.8),
