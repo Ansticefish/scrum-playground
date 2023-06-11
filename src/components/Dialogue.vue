@@ -1,8 +1,7 @@
 <template lang="pug">
 div.dialogue(:class="[{'orange': orange}, {'yellow': yellow}, {'purple': purple}]") 
   div.name {{ speaker }}
-  div.content
-    slot
+  div.content(v-html="content")
   div.pointer(v-if="showPointer" @click="changeStep")
 </template>
 
@@ -17,6 +16,9 @@ export default {
     showPointer: {
       type: Boolean,
       default: false
+    },
+    content: {
+      type: String,
     },
     // use it to toggle the class of .dialogue to change color
     orange: {
@@ -72,14 +74,14 @@ export default {
     height: fit-content;
     @extend %body;
     color: $text-default;
-    span {
+    &::v-deep span {
       color: $text-tint;
     }
-    img {
+    &::v-deep img {
       height: 180%;
       @include position (relative, $top: 10px);
     }
-    strong {
+    &::v-deep strong {
       @extend %h2;
     }
   }

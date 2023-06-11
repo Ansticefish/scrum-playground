@@ -1,35 +1,13 @@
 <template lang="pug">
 div.quest1
   div.head 
-    div.character-wrapper
-      img.hole(src="~@/assets/image/role-hole.png", alt="")
-      img.light(src="~@/assets/image/role_g_light.png", alt="")
-      img.character(src="~@/assets/image/role_g.png", alt="")
+    Character.character
     //- dialogues 
-    Dialogue(:speaker="'PO'" :showPointer="false" v-if="step === 1" )
-      span \ 碰 / 
-      | 我是短衝小精靈 ， 開發 A 組的 PO 。
-      br
-      span PO 也就是產品負責人（Product Owner） ， 
-      | 產品負責人會負責評估產品待辦清單的價值與重要性， 依序排列要執行的優先順序 ， 對齊產品目標 。 最後排出產品待辦清單（Product Backlog） 唷 ！
-    Dialogue(:speaker="'PO'" :showPointer="false" v-if="step === 2" )
-      | 剛好我最近手邊有一個 「 人才招募系統 」 的案子 ， 我才剛列出了 
-      span 「 產品需求清單 」 
-      |。
-      br
-      | 既然你都來了 ， 來試試看調整產品優先度 ， 排出產品待辦清單吧 ！
-    Dialogue(:speaker="'PO'" :showPointer="true" v-if="step === 3" @change-step="addStep")
-      | 在這階段我們要把需求放進產品待辦清單 ， 並調整其優先順序 。
-      br
-      | 對了 ！ 我們公司也推薦使用
-      img(src="~@/assets/image/logo-jira.png")                       
-      | 來做任務的管理呢 ！
-    Dialogue(:speaker="'PO'" :showPointer="false" v-if="step === 4")
-      strong 換你來試試看吧 ！
-      br
-      | 提示 ： 請把需求拖移至產品待辦清單 ， 並調整其優先順序。
-    Dialogue(:speaker="'PO'" :showPointer="true" @change-step="() => this.step += 1" v-if="step > 4")
-      | 哇喔完成惹 ， 尼太棒ㄌ！ 我們繼續吧 ！
+    Dialogue(:speaker="'PO'" :showPointer="false" :content="dialogue[0]" v-if="step === 1") 
+    Dialogue(:speaker="'PO'" :showPointer="false"  :content="dialogue[1]" v-if="step === 2" )
+    Dialogue(:speaker="'PO'" :showPointer="true" :content="dialogue[2]" v-if="step === 3" @change-step="addStep")
+    Dialogue(:speaker="'PO'" :showPointer="false" :content="dialogue[3]" v-if="step === 4")
+    Dialogue(:speaker="'PO'" :showPointer="true" :content="dialogue[4]" @change-step="() => this.step += 1" v-if="step > 4")
   div.body
     //- buttons
     div.btn-next(@click="()=> this.step = 2" v-if="step === 1")
@@ -92,17 +70,35 @@ div.quest1
 </template>
 
 <script>
+import Character from '../components/Character.vue'
 import Dialogue from '../components/Dialogue.vue'
 import QuestOneList from '../components/QuestOneList.vue'
 
 export default {
   name: 'QuestOne',
   components: {
+    Character,
     Dialogue,
     QuestOneList,
   },
   data () {
     return {
+      dialogue: [
+        `<span class="test"> \\ 碰 / </span> 我是短衝小精靈 ， 開發 A 組的 PO 。
+          <br>
+          <span> PO 也就是產品負責人（Product Owner） </span>，產品負責人會負責評估產品待辦清單的價值與重要性， 依序排列要執行的優先順序 ， 對齊產品目標。最後排出產品待辦清單（Product Backlog）唷！`,
+        `剛好我最近手邊有一個 「 人才招募系統 」 的案子 ， 我才剛列出了<span>「 產品需求清單 」</span>。<br>
+        既然你都來了 ， 來試試看調整產品優先度 ， 排出產品待辦清單吧 ！`,
+        `在這階段我們要把需求放進產品待辦清單 ， 並調整其優先順序 。
+         <br>
+         對了 ！ 我們公司也推薦使用
+        <img src="https://i.imgur.com/CPvAmtZ.png" alt="Jira">                       
+        來做任務的管理呢 ！`,
+        `<strong> 換你來試試看吧 ！</strong>
+        <br>   
+        提示 ： 請把需求拖移至產品待辦清單 ， 並調整其優先順序。`,
+        `哇喔完成惹 ， 尼太棒ㄌ！ 我們繼續吧 ！`
+      ],
       step: 1,
       list: [
         {
@@ -134,7 +130,7 @@ export default {
         time: 0, 
         id: -1
       },
-      blockFilled: 0
+      blockFilled: 0,
     }
   },
   methods: {
@@ -180,8 +176,7 @@ export default {
     @include flex (space-around, center);
     width: 100%;
     height: 30%;
-    .character-wrapper {
-      @extend %character;
+    .character {
       height: 130%;
       margin-top: 5%;
     }

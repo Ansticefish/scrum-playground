@@ -46,7 +46,7 @@ export default {
 
 <style lang="scss" scoped>
 %transition {
-   transition: opacity 1s ease-out;
+   transition: opacity .6s ease-out;
 }
 
 .opening {
