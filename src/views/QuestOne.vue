@@ -23,56 +23,60 @@ div.quest1
     //- list
     div.drag-area(v-if="step > 2")
       div.drag-area__left(@dragenter.prevent @dragover.prevent @drop="resetList($event)")
-        div.item.top(
-          v-show="!list[0].isDropped"
-          :class="[{'fade': step === 3}, {'dragged': list[0].isDragged}]"
-          draggable="true"
-          @dragstart="startDrag($event, 0)"
-          @dragend="endDrag(0)"
-        ) 
-          | 應徵者的線上履歷編輯器
-        div.item.bottom(
-          v-show="!list[1].isDropped"
-          :class="[{'fade': step === 3},{'dragged': list[1].isDragged}]"
-          draggable="true"
-          @dragstart="startDrag($event, 1)"
-          @dragend="endDrag(1)"
-          )
-          | 後台職缺管理功能（資訊上架、
-          br
-          | 下架、顯示應徵者資料）
+        //- div.item.top(
+        //-   v-show="!list[0].isDropped"
+        //-   :class="[{'fade': step === 3}, {'dragged': list[0].isDragged}]"
+        //-   draggable="true"
+        //-   @dragstart="startDrag($event, 0)"
+        //-   @dragend="endDrag(0)"
+        //- ) 
+        //-   | 應徵者的線上履歷編輯器  
+        //- div.item.bottom(
+        //-   v-show="!list[1].isDropped"
+        //-   :class="[{'fade': step === 3},{'dragged': list[1].isDragged}]"
+        //-   draggable="true"
+        //-   @dragstart="startDrag($event, 1)"
+        //-   @dragend="endDrag(1)"
+        //-   )
+        //-   | 後台職缺管理功能（資訊上架、
+        //-   br
+        //-   | 下架、顯示應徵者資料）
+        DraggedItem(:item="list[0]" :step="step" @startDrag="startDrag" @endDrag="endDrag") 
+        DraggedItem(:item="list[1]" :top="false" :step="step" @startDrag="startDrag" @endDrag="endDrag")  
       QuestOneList.list(
         @hide-item="hideItem" 
         @show-item="showItem" 
         :deletedId="deletedId")
       div.drag-area__right(@dragenter.prevent @dragover.prevent @drop="resetList($event)")
-        div.item.top(
-          v-show="!list[2].isDropped"
-          :class="[{'fade': step === 3},{'dragged': list[2].isDragged}]"
-          draggable="true"
-          @dragstart="startDrag($event, 2)"
-          @dragend="endDrag(2)"
-          ) 
-          | 會員系統（登入、註冊、權限管理）
-        div.item.bottom(
-          v-show="!list[3].isDropped"
-          :class="[{'fade': step === 3},{'dragged': list[3].isDragged}]"
-          draggable="true"
-          @dragstart="startDrag($event, 3)"
-          @dragend="endDrag(3)"
-          ) 
-          | 前台職缺列表、應徵
+        //- div.item.top(
+        //-   v-show="!list[2].isDropped"
+        //-   :class="[{'fade': step === 3},{'dragged': list[2].isDragged}]"
+        //-   draggable="true"
+        //-   @dragstart="startDrag($event, 2)"
+        //-   @dragend="endDrag(2)"
+        //-   ) 
+        //-   | 會員系統（登入、註冊、權限管理）
+        //- div.item.bottom(
+        //-   v-show="!list[3].isDropped"
+        //-   :class="[{'fade': step === 3},{'dragged': list[3].isDragged}]"
+        //-   draggable="true"
+        //-   @dragstart="startDrag($event, 3)"
+        //-   @dragend="endDrag(3)"
+        //-   ) 
+        //-   | 前台職缺列表、應徵
+        DraggedItem(:item="list[2]" :step="step" @startDrag="startDrag" @endDrag="endDrag") 
+        DraggedItem(:item="list[3]" :top="false" :step="step" @startDrag="startDrag" @endDrag="endDrag") 
         svg( id="path" width="148" height="176" viewBox="0 0 148 176" fill="none" xmlns="http://www.w3.org/2000/svg" v-if="step === 3")
           path(d="M4.19366 0.0094212C3.09428 -0.0975291 2.11635 0.706986 2.00939 1.80637L0.26642 19.7218C0.159463 20.8212 0.963979 21.7991 2.06336 21.906C3.16274 22.013 4.14067 21.2085 4.24762 20.1091L5.79693 4.1843L21.7217 5.73361C22.8211 5.84056 23.7991 5.03604 23.906 3.93667C24.013 2.83728 23.2084 1.85936 22.1091 1.7524L4.19366 0.0094212ZM147.044 172.729L5.5445 0.7294L2.45549 3.27065L143.955 175.27L147.044 172.729Z" fill="white")
         div.demo-block(v-if="step === 3") 前台職缺列表、應徵
           img(src="~@/assets/image/quest1-hand.png")
-</svg>
 </template>
 
 <script>
 import Character from '../components/Character.vue'
 import Dialogue from '../components/Dialogue.vue'
 import QuestOneList from '../components/QuestOneList.vue'
+import DraggedItem from '../components/DraggedItem.vue'
 
 export default {
   name: 'QuestOne',
@@ -80,6 +84,7 @@ export default {
     Character,
     Dialogue,
     QuestOneList,
+    DraggedItem
   },
   data () {
     return {
@@ -109,7 +114,7 @@ export default {
         },
         {
           id: 2,
-          content: '後台職缺管理功能（資訊上架、下架、顯示應徵者資料）',
+          content: '後台職缺管理功能（ 資訊上架、下架、顯示應徵者資料 ）',
           isDragged: false,
           isDropped: false,
         },
@@ -137,10 +142,11 @@ export default {
     addStep () {
       this.step += 1
     },
-    startDrag($event, index) {
+    startDrag(data) {
+      const [event, index] = data
       if(this.step === 3) return
-      $event.dataTransfer.clearData()
-      $event.dataTransfer.setData('application/json', JSON.stringify(this.list[index]))
+      event.dataTransfer.clearData()
+      event.dataTransfer.setData('application/json', JSON.stringify(this.list[index]))
       this.list[index].isDragged = true
     },
     endDrag(index) {
